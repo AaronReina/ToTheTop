@@ -3,7 +3,13 @@ const Schema   = mongoose.Schema;
 
 const userSchema = new Schema({
   username: String,
-  password: String
+  password: String,
+  nik: String,
+  imgPath:{type:String, default:"https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/userDefault.png"},
+  invitations: Array,
+  challenged: Array,
+  inspectors: Array,
+  active:{type:Boolean,default:false}
 }, {
   timestamps: {
     createdAt: 'created_at',

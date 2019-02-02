@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3001',
+    baseURL: 'http://localhost:3000',
     timeout: 2000,
     withCredentials: true,
 });
@@ -27,8 +27,8 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler)
     }
 
-    static signup(username, password ,campus, course){
-        return instance.post('/auth/signup',{username, password, campus, course})
+    static signup(username, password ,nik){
+        return instance.post('/auth/signup',{username, password, nik})
         .then((res) => res.data.user)
         .catch(AuthAPI.errorHandler)
     }

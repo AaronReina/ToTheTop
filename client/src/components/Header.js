@@ -4,42 +4,42 @@ import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { AuthAPI } from "../lib/auth";
 import { logout } from "../lib/redux/actions";
-
 const Head = styled.div`
   position: static;
-  background-color: blue;
+  background-color: rgb(231, 218, 215);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  height:15vh;
+  height: 12vh;
+  padding: 0 5%;
 `;
 
 const Logo = styled.img`
- height:10vh;
+  height: 10vh;
+  margin-top: 30%;
 `;
 
-  const StyledLink = styled(Link)`
+const StyledLink = styled(Link)`
   text-decoration: none;
   margin-right: 10px;
-    color:white;
+  color: white;
 `;
 
-
 class _Header extends Component {
-    handleLogout() {
-        const { dispatch } = this.props;
-        AuthAPI.logout()
-          .then(user => {
-            dispatch(logout(user));
-          })
-          .catch(e => e);
-      }
+  handleLogout() {
+    const { dispatch } = this.props;
+    AuthAPI.logout()
+      .then(user => {
+        dispatch(logout(user));
+      })
+      .catch(e => e);
+  }
 
   render() {
     return (
       <Head>
         <Link to="/">
-          <div >
+          <div>
             <Logo
               src="https://res.cloudinary.com/aaronreina/image/upload/v1548872586/ToTheTop/tothetopwhite.png"
               alt="logo"
@@ -49,12 +49,11 @@ class _Header extends Component {
 
         {this.props.user ? (
           <div>
-            <button onClick={() => this.handleLogout()}>Logout</button>
+              <StyledLink onClick={() => this.handleLogout()} to="/">Logout</StyledLink>
           </div>
         ) : (
           <div>
-            <StyledLink to="/auth/login">Loggin</StyledLink>
-
+            <StyledLink  to="/auth/login">Loggin</StyledLink>
             <StyledLink to="/auth/signup">Signup </StyledLink>
           </div>
         )}
@@ -63,4 +62,3 @@ class _Header extends Component {
   }
 }
 export const Header = connect(store => store)(_Header);
-

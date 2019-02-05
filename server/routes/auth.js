@@ -29,16 +29,16 @@ router.post("/login", (req, res, next) => {
 
 
 router.post("/signup", (req, res, next) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
-  const nik = req.body.nik;
+  const name = req.body.name;
   
 
-  if (username === "" || password === ""|| nik === "") {
+  if (email === "" || password === ""|| name === "") {
     return;
   }
 
-  User.findOne({ username }, "username", (err, user) => {
+  User.findOne({ email }, "email", (err, user) => {
     if (user !== null) {
       return;
     }
@@ -48,9 +48,9 @@ router.post("/signup", (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const newUser = new User({
-      username,
+      email,
       password: hashPass,
-      nik
+      name
     });
 
     newUser.save()

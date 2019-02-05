@@ -21,14 +21,14 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler)
     }
 
-    static login(username, password){
-        return instance.post('/auth/login',{username, password})
+    static login(email, password){
+        return instance.post('/auth/login',{email, password})
         .then((res) => res.data)
         .catch(AuthAPI.errorHandler)
     }
 
-    static signup(username, password ,nik){
-        return instance.post('/auth/signup',{username, password, nik})
+    static signup(email, password ,name){
+        return instance.post('/auth/signup',{email, password, name})
         .then((res) => res.data.user)
         .catch(AuthAPI.errorHandler)
     }
@@ -42,7 +42,7 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler);
     }
 
-    static logout(username, password){
+    static logout(email, password){
         return instance.get('/auth/logout')
         .then((res) => console.log("Logout"))
         .catch(AuthAPI.errorHandler)

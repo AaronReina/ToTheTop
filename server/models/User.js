@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: String,
+  email: String,
   password: String,
-  nik: String,
+  name: String,
   imgPath:{type:String, default:"https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/userDefault.png"},
   invitations: Array,
   challenged: Array,

@@ -6,7 +6,7 @@ import { AuthAPI } from "../lib/auth";
 import { logout } from "../lib/redux/actions";
 const Head = styled.div`
   position: static;
-  background-color: rgb(231, 218, 215);
+  background-color: ${props => props.color};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,8 +36,18 @@ class _Header extends Component {
   }
 
   render() {
+    let color;
+    this.props.event === "challenged"
+      ? (color = "purple")
+      : this.props.event === "inspector"
+      ? (color = "red")
+      : this.props.event === "private"
+      ? (color = "black")
+      : this.props.user
+      ? (color = "blue")
+      : (color = "rgb(231, 218, 215)");
     return (
-      <Head>
+      <Head color={color}>
         <Link to="/">
           <div>
             <Logo
@@ -49,11 +59,13 @@ class _Header extends Component {
 
         {this.props.user ? (
           <div>
-              <StyledLink onClick={() => this.handleLogout()} to="/">Logout</StyledLink>
+            <StyledLink onClick={() => this.handleLogout()} to="/">
+              Logout
+            </StyledLink>
           </div>
         ) : (
           <div>
-            <StyledLink  to="/auth/login">Loggin</StyledLink>
+            <StyledLink to="/auth/login">Loggin</StyledLink>
             <StyledLink to="/auth/signup">Signup </StyledLink>
           </div>
         )}
@@ -61,4 +73,4 @@ class _Header extends Component {
     );
   }
 }
-export const Header = connect(store => store)(_Header);
+export const Header = connect(store => ({ user: store.user }))(_Header);

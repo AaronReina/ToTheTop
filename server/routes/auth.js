@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require('passport');
 const router = express.Router();
 const User = require("../models/User");
+const Events = require("../models/Events");
 const uploadCloud = require("../configs/cloudinary.js");
 
 
@@ -80,5 +81,8 @@ router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
   console.log("manda")
   res.json(req.file);
 });
+
+
+
 
 module.exports = router;

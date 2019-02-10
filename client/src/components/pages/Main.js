@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Header } from "./Header";
+import { Header } from "../Header";
 import styled from "@emotion/styled";
+import ListUser from "../ListUser";
+import { Link } from "react-router-dom";
 
 const Backgroundphoto = styled.div`
   width: 100%;
@@ -28,17 +30,21 @@ padding: 0 10%;
 `;
 
 class _Main extends Component {
+  
   render() {
     const { user } = this.props;
     return (
       <div>
         <Header />
-
         {user ? (
-          <div />
+          <div>
+            <Link to="/Create" >Create</Link>
+          <ListUser type="Challenges" userdata={user.challenged} />
+          <ListUser type="To Control" userdata={user.inspectors} />
+          </div>
         ) : (
           <div>
-            <Backgroundphoto>
+            <Backgroundphoto >
               <Title>Never Give Up</Title>
             </Backgroundphoto>
 
@@ -61,4 +67,4 @@ class _Main extends Component {
   }
 }
 
-export const Main = connect(store => store)(_Main);
+export const Main = connect(store => ({user:store.user}))(_Main);

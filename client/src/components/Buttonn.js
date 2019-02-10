@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
 
-const LinkButton = styled(Link)`
+const Button = styled.button`
   margin-top: 20px;
   margin-left: 30%;
   padding: 16px 0;
-  width:40%;
+  width: 40%;
   color: white;
   font-size: 14px;
-  border-radius:4px;
+  border-radius: 4px;
   background-color: rgb(231, 218, 215);
   letter-spacing: 1px;
   text-align: center;
@@ -17,17 +16,17 @@ const LinkButton = styled(Link)`
   display: inline-block;
 `;
 
-class ButtonRedirect extends Component {
+class Buttonn extends Component {
   render() {
     return (
-      <LinkButton
-        onClick={this.props.onClick}
-        to={this.props.redirect}
-        type="button"
-      >
-        {this.props.info}
-      </LinkButton>
+        <Button
+          onClick={this.props.onClick}
+          type="button"
+        >
+          {this.props.info}
+        </Button>
     );
   }
 }
-export default ButtonRedirect;
+export default Buttonn;
+

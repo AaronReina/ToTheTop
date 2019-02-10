@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Input from "./Input";
-import { AuthAPI } from "../lib/auth";
+import Input from "../Input";
+import { AuthAPI } from "../../lib/auth";
 import { connect } from "react-redux";
-import { login } from "../lib/redux/actions";
-import { Header } from "./Header";
-import  ButtonRedirect  from "./ButtonRedirect";
+import { login } from "../../lib/redux/actions";
+import { Header } from "../Header";
+import  Buttonn  from "../Buttonn";
 
 export class _Signup extends Component {
   constructor() {
@@ -35,6 +35,7 @@ export class _Signup extends Component {
     AuthAPI.signup(email, password, name)
       .then(user => {
         dispatch(login(user));
+        this.props.history.push("/")
       })
       .catch(e => console.log("catch de handlesubmit" + e));
   }
@@ -65,11 +66,11 @@ export class _Signup extends Component {
             />
             <button onClick={e => this.handleUpload(e)}>SUBIR</button>
           </form> */}
-          <ButtonRedirect onClick={() => this.handleSubmit()} redirect={"/"} info={"Lets Go!"}/>
+          <Buttonn onClick={() => this.handleSubmit()} info={"Lets Go!"}/>
         </div>
       </div>
     );
   }
 }
 
-export const Signup = connect(store => store)(_Signup);
+export const Signup = connect(store => ({user:store.user}))(_Signup);

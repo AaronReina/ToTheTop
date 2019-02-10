@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Input from './Input';
-import {  login  } from '../lib/redux/actions';
-import { AuthAPI } from "../lib/auth";
+import Input from '../Input';
+import {  login  } from '../../lib/redux/actions';
+import { AuthAPI } from "../../lib/auth";
 import { connect } from 'react-redux';
-import { Header } from "./Header";
-import  ButtonRedirect  from "./ButtonRedirect";
+import { Header } from "../Header";
+import  Buttonn  from "../Buttonn";
 
 export class _Login extends Component {
   constructor(){
@@ -20,7 +20,7 @@ handleLogin(){
     AuthAPI.login(email, password)
     .then( user =>{
         dispatch(login(user))
-        
+        this.props.history.push("/")
     })
     .catch( e =>  e);
 }
@@ -30,12 +30,12 @@ handleLogin(){
       <div>
           <Header/>
            <div>
-        <Input text="Email" onChange={e => this.setState({password:e.target.value})} />
+        <Input text="Nombre" onChange={e => this.setState({password:e.target.value})} />
         <Input text="Password" onChange={e => this.setState({email:e.target.value})}/>
-        <ButtonRedirect onClick={() => this.handleLogin()} redirect={'/'} info="Login"/>
+        <Buttonn onClick={() => this.handleLogin()}  info="Login"/>
       </div>
       </div>
     );
   }
 }
-export const Login = connect(store => store)(_Login);
+export const Login = connect(store => ({user:store.user}))(_Login);

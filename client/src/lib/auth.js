@@ -47,4 +47,5 @@ export class AuthAPI {
         .then((res) => console.log("Logout"))
         .catch(AuthAPI.errorHandler)
     }
+  
 }

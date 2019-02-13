@@ -19,14 +19,10 @@ const Button = styled.button`
 class Buttonn extends Component {
   render() {
     return (
-        <Button
-          onClick={this.props.onClick}
-          type="button"
-        >
-          {this.props.info}
-        </Button>
+      <Button onClick={this.props.onClick} type="button">
+        {this.props.info}
+      </Button>
     );
   }
 }
 export default Buttonn;
-

@@ -36,6 +36,7 @@ class Input extends Component {
           onChange={this.props.onChange}
           placeholder={this.props.placeholder}
           type={this.props.type}
+          list={this.props.list}
         />
       </Block>
     );

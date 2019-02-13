@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Header } from "../Header";
 import Buttonn from "../Buttonn";
 import axios from "axios";
+import AddUsers from "../AddUsers";
 
 export class _Create extends Component {
   constructor() {
@@ -23,74 +24,120 @@ export class _Create extends Component {
         imgPath: "",
         surprise: false
       },
-      rewards: []
+      rewards: [],
+      search: "",
+      userList: [],
+      private: false
     };
   }
   createEventHandler() {
     const state = this.state;
-    console.log(state);
     return axios
       .post(`http://localhost:3000/events/create`, { state })
       .then(res => {
-        console.log({ state });
         console.log(res);
       })
       .catch(err => console.log(err));
   }
 
-  handleRewardPush() {
-    let actualReward = this.state.rewards;
-    let reward = this.state.reward;
-    console.log(this.state.rewards);
-    console.log(this.state.reward);
-    actualReward.push(reward);
-    this.setState({ rewards: actualReward });
-
+  filterUsers = e => {
+    this.setState({
+      search: e.target.value
+    });
+    e.target.value &&
+      axios
+        .post(`http://localhost:3000/events/searchUser/${e.target.value}`)
+        .then(element => {
+          this.setState({
+            userList: element.data
+          });
+          console.log(this.state.userList);
+        })
+        .catch(err => console.log(err));
+  };
+  privateEvent() {
+  let stateCopy = this.state;
+  let userId = this.props.user._id
+  let privated= !this.state.private;
+  if(privated===true)
+    {
+      stateCopy.event.challenged = userId;
+      stateCopy.event.inspectors.push(userId);
+      stateCopy.private = privated;  
+    this.setState({ state:stateCopy})
+    console.log(this.state)}
+    
+    else{
+      stateCopy.event.challenged = "";
+      stateCopy.event.inspectors= []
+      stateCopy.private = privated;  
+    this.setState({ state:stateCopy})
+    console.log(this.state)}
+    
+    
   }
 
+  addToInspector(e) {
+    let statenow = this.state.event;
+    statenow.inspectors.includes(e.target.value) ||
+      statenow.inspectors.push(e.target.value);
+    this.setState({ rewards: statenow });
+    console.log(this.state);
+  }
+  addToChallenged(e) {
+    let statenow = this.state.event;
+    statenow.challenged = e.target.value;
+    this.setState({ event: statenow });
+    console.log(e.target.value);
+  }
+  clearUsers() {
+    let stateCopy = this.state;
+       stateCopy.event.challenged = "";
+      stateCopy.event.inspectors= []
+    this.setState({ state:stateCopy})
+    console.log(this.state)}
+  
+  handleRewardPush(e) {
+    let actualReward = this.state.rewards;
+    const reward = this.state.reward;
+    actualReward.push({ ...reward });
+    this.setState({ rewards: actualReward });
+    console.log(e.target.value);
+  }
   handleEventname(e) {
     let statenow = this.state.event;
     statenow.name = e.target.value;
     this.setState({ event: statenow });
-    console.log(this.state.event.name);
-    console.log(this.state.rewards);
   }
   handleEventype(e) {
     let statenow = this.state.event;
     statenow.type = e.target.value;
     this.setState({ event: statenow });
-    console.log(this.state.event.type);
   }
   handleEventobjective(e) {
     let statenow = this.state.event;
     statenow.objective = e.target.value;
     this.setState({ event: statenow });
-    console.log(this.state.event.objective);
   }
   handleRewardname(e) {
     let statenow = this.state.reward;
     statenow.name = e.target.value;
     this.setState({ reward: statenow });
-    console.log(this.state.reward.name);
   }
   handleRewardgoal(e) {
     let statenow = this.state.reward;
     statenow.goal = e.target.value;
     this.setState({ reward: statenow });
-    console.log(this.state.reward.goal);
   }
   handleRewardtext(e) {
     let statenow = this.state.reward;
     statenow.text = e.target.value;
     this.setState({ reward: statenow });
-    console.log(this.state.reward.text);
   }
   handleRewarsuprise() {
     let statenow = this.state.reward;
     statenow.surprise = !statenow.surprise;
     this.setState({ reward: statenow });
-    console.log(this.state.reward.surprise);
-    console.log(this.state.reward.text);
   }
 
   render() {
@@ -104,14 +151,43 @@ export class _Create extends Component {
             </div>
           ) : (
             <div>
+               <Input
+                text="Click make it private"
+                type="checkbox"
+                onChange={() => this.privateEvent()}
+              />
+              {this.state.private ||
+              <div>
+                <Input
+                  text="Looking for friends"
+                  onChange={e => this.filterUsers(e)}
+                />
+                <AddUsers
+                  onClick={e => this.addToChallenged(e)}
+                  onClick2={e => this.addToInspector(e)}
+                  userdata={this.state.userList}
+                />
+                {/* <showUsers
+                  onClick={e => this.clearUsers(e)}
+                  userdata={this.state.event}
+                /> */}
+              </div>
+              }
               <Input
                 text="Name of the event"
                 onChange={e => this.handleEventname(e)}
               />
               <Input
                 text="Type of the event"
+                list="types"
                 onChange={e => this.handleEventype(e)}
               />
+              <datalist id="types">
+                <option>Basic</option>
+                <option>Smoke</option>
+                <option>Weigth</option>
+                <option>fit</option>
+              </datalist>
               <Input
                 text="Final Objective"
                 onChange={e => this.handleEventobjective(e)}
@@ -137,6 +213,7 @@ export class _Create extends Component {
                 onClick={() => this.handleRewardPush()}
                 info={"Add this Reward"}
               />
+
               {/* <form>
                     <input
                       type="file"

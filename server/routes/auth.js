@@ -29,7 +29,8 @@ router.post("/signup", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
-
+  const imgPath = req.body.imgPath;
+console.log(imgPath)
   if (email === "" || password === "" || name === "") {
     return;
   }
@@ -45,7 +46,8 @@ router.post("/signup", (req, res, next) => {
     const newUser = new User({
       email,
       password: hashPass,
-      name
+      name,
+      imgPath
     });
 
     newUser
@@ -58,7 +60,7 @@ router.post("/signup", (req, res, next) => {
       });
   });
 });
-router.get("/auth/loggedin", (req, res) => {
+router.get("/loggedin", (req, res) => {
   const { user } = req;
   if (user) {
     res.json({ user });

@@ -8,27 +8,52 @@ export class _Events extends Component {
   constructor() {
     super();
     this.state = {
+      id:"",
       type: "",
-      event: {}
+      name: "",
+      objective: "",
+      actualValue: "",
+      challenged: "",
+      inspectors: [],
+      rewards: []
     };
   }
   eventHandler() {
     const { user } = this.props;
-    console.log(this.props);
-    console.log(this.props.match.params.id);
+    return axios
+      .post(`http://localhost:3000/events/type/${this.props.match.params.id}`, {
+        user
+      })
+      .then(res => {
+        this.setState({ type: res.data.type });
+      })
+      .catch(err => console.log(err));
+  }
+
+  eventHandler2() {
     return axios
       .post(
-        `http://localhost:3000/events/event/${this.props.match.params.id}`,
-        { user }
+        `http://localhost:3000/events/populate/${this.props.match.params.id}`
       )
       .then(res => {
-        this.setState({ type: res.data.type, event: res.data.event });
-        console.log(this.state.event);
+        this.setState({
+          id:this.props.match.params.id,
+          name: res.data.name,
+          objective: res.data.objective,
+          challenged: res.data.challenged,
+          inspectors: res.data.inspectors,
+          rewards: res.data.rewards,
+          actualValue: res.data.actualValue
+        });
+        console.log(res.data);
       })
       .catch(err => console.log(err));
   }
   componentDidMount() {
-    this.props.user && this.eventHandler();
+    this.props.user && this.eventHandler() && this.eventHandler2();
+  }
+  componentDidUpdate(prop) {
+    prop.user !== this.props.user && this.eventHandler()&& this.eventHandler2();
   }
   render() {
     return (
@@ -45,8 +70,7 @@ export class _Events extends Component {
             <p>you have no access to this challenge</p>
           ) : (
             <div>
-              {console.log(this.state.event)}
-              <EventInfo event={this.state.event} />
+              <EventInfo event={this.state} />
             </div>
           )}
         </div>

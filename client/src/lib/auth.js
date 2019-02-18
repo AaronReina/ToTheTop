@@ -12,10 +12,10 @@ export class AuthAPI {
     static errorHandler(e) {
         console.error("AUTH API ERROR");
         console.error(e);
-        throw e;
+        
     }
 
-    static loggedin(){
+    static loggedIn(){
         return instance.get('/auth/loggedin')
         .then((res) => res.data.user)
         .catch(AuthAPI.errorHandler)
@@ -27,8 +27,8 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler)
     }
 
-    static signup(email, password ,name){
-        return instance.post('/auth/signup',{email, password, name})
+    static signup(email, password ,name, imgPath){
+        return instance.post('/auth/signup',{email, password, name, imgPath})
         .then((res) => res.data.user)
         .catch(AuthAPI.errorHandler)
     }

@@ -14,7 +14,7 @@ const storage = cloudinaryStorage({
   folder: 'ToTheTop', 
   allowedFormats: ['jpg', 'png'],
   filename: function (req, file, cb) {
-    cb(null, file.originalname); 
+    cb(null, `${Math.random().toString(36).substring(7)}`); 
   }
 });
 

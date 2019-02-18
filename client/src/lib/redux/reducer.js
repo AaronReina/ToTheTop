@@ -36,6 +36,12 @@ export const rootReducer = (store = initialStore, action) => {
                 image: action.image
             }
         break;
+        case "LOGGED_IN":
+        store = {
+            ...store,
+            user: action.user
+            }
+        break;
         default: return store
     }
    

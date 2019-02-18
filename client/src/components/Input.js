@@ -33,6 +33,7 @@ class Input extends Component {
       <Block>
         <label>{this.props.text}</label>
         <Inputs
+        value={this.props.value}
           onChange={this.props.onChange}
           placeholder={this.props.placeholder}
           type={this.props.type}

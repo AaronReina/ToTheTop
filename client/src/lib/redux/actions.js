@@ -32,4 +32,10 @@ export const login = (user) => {
         image: e.image
     }
   }
+  export const loggedIn = (user) => {
+    return {
+        type: "LOGGED_IN",
+        user
+    }
+  }
   

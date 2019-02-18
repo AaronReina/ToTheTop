@@ -5,14 +5,17 @@ import { Header } from "../Header";
 import Buttonn from "../Buttonn";
 import axios from "axios";
 import AddUsers from "../AddUsers";
-
+import ShowUsers from "../ShowUsers";
+import ShowRewards from "../ShowRewards";
+import { AuthAPI } from "../../lib/auth.js"
 export class _Create extends Component {
   constructor() {
     super();
     this.state = {
       event: {
         name: "",
-        type: "",
+        type: "Basic",
+        privated: "",
         challenged: "",
         inspectors: [],
         objective: ""
@@ -21,21 +24,36 @@ export class _Create extends Component {
         name: "",
         goal: "",
         text: "",
-        imgPath: "",
+        imgPath: "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
         surprise: false
       },
       rewards: [],
       search: "",
       userList: [],
-      private: false
+      private: false,
+      temporal: {
+        challenged: "",
+        inspectors: []
+      },
+     
     };
   }
+    handleImgChange = e => {
+    const name = this.username;
+    let file = new FormData();
+    file.set("name", name);
+    file.append("photo", e.target.files[0], name);
+    AuthAPI.upload(file).then(({data})=> {  let statenow = this.state.reward;
+    statenow.imgPath = data.url;
+    this.setState({ reward: statenow })})
+  };
+
   createEventHandler() {
     const state = this.state;
     return axios
       .post(`http://localhost:3000/events/create`, { state })
       .then(res => {
-        console.log(res);
+        this.props.history.push("/");
       })
       .catch(err => console.log(err));
   }
@@ -56,53 +74,84 @@ export class _Create extends Component {
         .catch(err => console.log(err));
   };
   privateEvent() {
-  let stateCopy = this.state;
-  let userId = this.props.user._id
-  let privated= !this.state.private;
-  if(privated===true)
-    {
-      stateCopy.event.challenged = userId;
-      stateCopy.event.inspectors.push(userId);
-      stateCopy.private = privated;  
-    this.setState({ state:stateCopy})
-    console.log(this.state)}
-    
-    else{
+    let stateCopy = this.state;
+    let userId = this.props.user._id;
+    let privateSwitch = !this.state.private;
+    if (privateSwitch === true) {
+      stateCopy.event.privated = userId;
       stateCopy.event.challenged = "";
-      stateCopy.event.inspectors= []
-      stateCopy.private = privated;  
-    this.setState({ state:stateCopy})
-    console.log(this.state)}
-    
-    
+      stateCopy.event.inspectors = [];
+      stateCopy.private = privateSwitch;
+      this.setState({ state: stateCopy });
+      console.log(this.state);
+    } else {
+      stateCopy.event.privated = "";
+      stateCopy.private = privateSwitch;
+      this.setState({ state: stateCopy });
+      console.log(this.state);
+    }
   }
 
   addToInspector(e) {
-    let statenow = this.state.event;
-    statenow.inspectors.includes(e.target.value) ||
-      statenow.inspectors.push(e.target.value);
-    this.setState({ rewards: statenow });
+    let statenow = this.state;
+    if (
+      statenow.event.inspectors.includes(e.target.value) ||
+      statenow.event.challenged === e.target.value
+    ) {
+      return "";
+    }
+    statenow.event.inspectors.push(e.target.value);
+    statenow.temporal.inspectors.push(e.target.name);
+    this.setState({ state: statenow });
     console.log(this.state);
   }
+
   addToChallenged(e) {
-    let statenow = this.state.event;
-    statenow.challenged = e.target.value;
-    this.setState({ event: statenow });
-    console.log(e.target.value);
+    let statenow = this.state;
+    if (
+      statenow.event.inspectors.includes(e.target.value) ||
+      statenow.event.challenged === e.target.value
+    ) {
+      return "";
+    }
+
+    statenow.event.challenged = e.target.value;
+    statenow.temporal.challenged = e.target.name;
+    this.setState({ state: statenow });
+    console.log(this.state);
   }
   clearUsers() {
     let stateCopy = this.state;
-       stateCopy.event.challenged = "";
-      stateCopy.event.inspectors= []
-    this.setState({ state:stateCopy})
-    console.log(this.state)}
-  
+    stateCopy.event.challenged = "";
+    stateCopy.event.inspectors = [];
+    stateCopy.temporal.challenged = "";
+    stateCopy.temporal.inspectors = [];
+    this.setState({ state: stateCopy });
+    console.log(this.state);
+  }
+  clearRewards() {
+    this.setState({
+      rewards: []
+    });
+  }
+
+  resetRewards() {
+    this.setState({
+      reward: {
+        name: "",
+        goal: "",
+        text: "",
+        imgPath: "",
+        surprise: false
+      }
+    });
+  }
   handleRewardPush(e) {
     let actualReward = this.state.rewards;
     const reward = this.state.reward;
     actualReward.push({ ...reward });
-    this.setState({ rewards: actualReward });
-    console.log(e.target.value);
+    this.setState({ rewards: actualReward }, () => this.resetRewards());
+    this.resetRewards();
   }
   handleEventname(e) {
     let statenow = this.state.event;
@@ -151,57 +200,57 @@ export class _Create extends Component {
             </div>
           ) : (
             <div>
-               <Input
+              <Input
                 text="Click make it private"
                 type="checkbox"
                 onChange={() => this.privateEvent()}
               />
-              {this.state.private ||
-              <div>
-                <Input
-                  text="Looking for friends"
-                  onChange={e => this.filterUsers(e)}
-                />
-                <AddUsers
-                  onClick={e => this.addToChallenged(e)}
-                  onClick2={e => this.addToInspector(e)}
-                  userdata={this.state.userList}
-                />
-                {/* <showUsers
-                  onClick={e => this.clearUsers(e)}
-                  userdata={this.state.event}
-                /> */}
-              </div>
-              }
+              {this.state.private || (
+                <div>
+                  <Input
+                    text="Looking for friends"
+                    onChange={e => this.filterUsers(e)}
+                  />
+                  <AddUsers
+                    onClick={e => this.addToChallenged(e)}
+                    onClick2={e => this.addToInspector(e)}
+                    userdata={this.state.userList}
+                  />
+                  <ShowUsers
+                    onClick={e => this.clearUsers(e)}
+                    userdata={this.state.temporal}
+                  />
+                </div>
+              )}
               <Input
                 text="Name of the event"
                 onChange={e => this.handleEventname(e)}
               />
-              <Input
-                text="Type of the event"
-                list="types"
-                onChange={e => this.handleEventype(e)}
-              />
-              <datalist id="types">
+            
+               <label>"Type of the event"</label>
+              <select id="types" onChange={e => this.handleEventype(e)}>
                 <option>Basic</option>
                 <option>Smoke</option>
                 <option>Weigth</option>
                 <option>fit</option>
-              </datalist>
+              </select>
               <Input
                 text="Final Objective"
                 onChange={e => this.handleEventobjective(e)}
               />
               <Input
                 text="Name of the reward"
+                value={this.state.reward.name}
                 onChange={e => this.handleRewardname(e)}
               />
               <Input
                 text="Goal for this reward"
+                value={this.state.reward.goal}
                 onChange={e => this.handleRewardgoal(e)}
               />
               <Input
                 text="some info about the reward"
+                value={this.state.reward.text}
                 onChange={e => this.handleRewardtext(e)}
               />
               <Input
@@ -209,19 +258,23 @@ export class _Create extends Component {
                 type="checkbox"
                 onChange={() => this.handleRewarsuprise()}
               />
+               <Input
+                  type="file"
+                  onChange={e => this.handleImgChange(e)}
+                  name="name"
+                />
               <Buttonn
-                onClick={() => this.handleRewardPush()}
+                onClick={e => this.handleRewardPush(e)}
                 info={"Add this Reward"}
               />
-
-              {/* <form>
-                    <input
-                      type="file"
-                      onChange={e => this.handleImgChange(e)}
-                      name="name"
-                    />
-                    <button onClick={e => this.handleUpload(e)}>SUBIR</button>
-                  </form> */}
+              <ShowRewards
+                onClick={() => this.clearRewards()}
+                userdata={this.state.rewards}
+              />
+            
+               
+               
+              
               <Buttonn
                 onClick={() => this.createEventHandler()}
                 info={"Create Event"}
@@ -235,16 +288,3 @@ export class _Create extends Component {
 }
 
 export const Create = connect(store => ({ user: store.user }))(_Create);
-//   handleImgChange = e => {
-//     const name = this.username;
-//     let file = new FormData();
-//     file.set("name", name);
-//     file.append("photo", e.target.files[0], name);
-//     let { dispatch } = this.props;
-//     dispatch({ type: "IMG_UPLOAD", image: file });
-//   };
-
-//   handleUpload = e => {
-//     e.preventDefault();
-//     AuthAPI.upload(this.props.image).then(e => console.log(this.props.image));
-//   };

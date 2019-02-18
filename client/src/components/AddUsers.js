@@ -10,10 +10,10 @@ class AddUsers extends Component {
             <div key={e.email}>
               <p>
                 Name {e.name} Email {e.email}
-                <button value={e._id} onClick={this.props.onClick}>
+                <button value={e._id} name={e.name} onClick={this.props.onClick}>
                   Challenged
                 </button>
-                <button value={e._id} onClick={this.props.onClick2}>
+                <button value={e._id} name={e.name} onClick={this.props.onClick2}>
                   Inspector/s
                 </button>
               </p>

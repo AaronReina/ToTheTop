@@ -4,6 +4,8 @@ import { Header } from "../Header";
 import styled from "@emotion/styled";
 import ListUser from "../ListUser";
 import { Link } from "react-router-dom";
+import ListAccept from "../ListAccept";
+import axios from "axios";
 
 const Backgroundphoto = styled.div`
   width: 100%;
@@ -25,12 +27,27 @@ const Title = styled.h1`
 `;
 const Text = styled.div`
   text-align: center;
-color: rgb(231, 218, 215);
-padding: 0 10%;
+  color: rgb(231, 218, 215);
+  padding: 0 10%;
 `;
 
 class _Main extends Component {
-  
+
+  acceptEvent(e) {
+    const { user, dispatch } = this.props;
+    axios
+      .post(`http://localhost:3000/events/accept/${e.target.value}`, { user })
+      .then(res => dispatch({ type: "LOGIN", user: res.data }))
+      .catch(err => console.log(err));
+  }
+  rejectEvent(e) {
+    const { user, dispatch } = this.props;
+    axios
+      .post(`http://localhost:3000/events/reject/${e.target.value}`, { user })
+      .then(res => dispatch({ type: "LOGIN", user: res.data }))
+      .catch(err => console.log(err));
+  }
+
   render() {
     const { user } = this.props;
     return (
@@ -38,27 +55,39 @@ class _Main extends Component {
         <Header />
         {user ? (
           <div>
-            <Link to="/Create" >Create</Link>
-          <ListUser type="Challenges" userdata={user.challenged} />
-          <ListUser type="To Control" userdata={user.inspectors} />
+            <Link to="/Create">Create</Link>
+            <ListUser type="Privates" userdata={user.privated} />
+            <ListUser type="Challenges" userdata={user.challenged} />
+            <ListUser type="To Control" userdata={user.inspectors} />
+            <ListAccept
+              type="Accept challenges"
+              userdata={user.invitationCha}
+              onClick={e => this.acceptEvent(e)}
+              onClick2={e => this.rejectEvent(e)}
+            />
+            <ListAccept
+              type="Accept inspectors"
+              userdata={user.invitationIns}
+              onClick={e => this.acceptEvent(e)}
+              onClick2={e => this.rejectEvent(e)}
+            />
           </div>
         ) : (
           <div>
-            <Backgroundphoto >
+            <Backgroundphoto>
               <Title>Never Give Up</Title>
             </Backgroundphoto>
 
             <Text>
-              <h3 >
-                All the people have objectives, but being motivated for so long is so dificult
+              <h3>
+                All the people have objectives, but being motivated for so long
+                is so dificult
               </h3>
-              <h3 >
-               With To The Top you can help yourself and other people to reach their objectives,
-               with our step by step rewards sistem.
+              <h3>
+                With To The Top you can help yourself and other people to reach
+                their objectives, with our step by step rewards sistem.
               </h3>
-              <h3 >
-              Join Us!!
-              </h3>
+              <h3>Join Us!!</h3>
             </Text>
           </div>
         )}
@@ -67,4 +96,4 @@ class _Main extends Component {
   }
 }
 
-export const Main = connect(store => ({user:store.user}))(_Main);
+export const Main = connect(store => ({ user: store.user }))(_Main);

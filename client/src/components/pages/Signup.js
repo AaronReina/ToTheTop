@@ -12,27 +12,33 @@ export class _Signup extends Component {
     this.state = {
       email: "",
       password: "",
+      imgPath: "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/userDefault.png",
       name: ""
     };
   }
-//   handleImgChange = e => {
-//     const name = this.username;
-//     let file = new FormData();
-//     file.set("name", name);
-//     file.append("photo", e.target.files[0], name);
-//     let { dispatch } = this.props;
-//     dispatch({ type: "IMG_UPLOAD", image: file });
-//   };
-
-//   handleUpload = e => {
-//     e.preventDefault();
-//     AuthAPI.upload(this.props.image).then(e => console.log(this.props.image));
-//   };
+  handleImgChange = e => {
+    const name = this.state.name;
+    let file = new FormData();
+    file.set("name", name);
+    file.append("photo", e.target.files[0], name);
+    AuthAPI.upload(file).then(({data})=> {  
+    this.setState({ imgPath: data.url })});
+  };
+  handleImgChange = e => {
+    const name = this.username;
+    let file = new FormData();
+    file.set("name", name);
+    file.append("photo", e.target.files[0], name);
+    AuthAPI.upload(file).then(({data})=> {  let statenow = this.state;
+    statenow.imgPath = data.url;
+    console.log(data.url)
+    this.setState({ state: statenow })})
+  };
 
   handleSubmit() {
-    const { email, password, name } = this.state;
+    const { email, password, name , imgPath } = this.state;
     const { dispatch } = this.props;
-    AuthAPI.signup(email, password, name)
+    AuthAPI.signup(email, password, name, imgPath)
       .then(user => {
         dispatch(login(user));
         this.props.history.push("/")
@@ -49,7 +55,6 @@ export class _Signup extends Component {
   handleName(e) {
     this.setState({ name: e.target.value });
   }
-
   render() {
     return (
       <div>
@@ -58,14 +63,13 @@ export class _Signup extends Component {
           <Input text="Email" onChange={e => this.handleEmail(e)} />
           <Input text="Password" onChange={e => this.handlePass(e)} />
           <Input text="Name" onChange={e => this.handleName(e)} />
-          {/* <form>
-            <input
+         
+            <Input
               type="file"
               onChange={e => this.handleImgChange(e)}
               name="name"
             />
-            <button onClick={e => this.handleUpload(e)}>SUBIR</button>
-          </form> */}
+           
           <Buttonn onClick={() => this.handleSubmit()} info={"Lets Go!"}/>
         </div>
       </div>

@@ -7,7 +7,8 @@ const rewardSchema = new Schema({
   text: String,
   imgPath:{type:String, default:"https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg"},
   surprise: {type:Boolean, default:false},
-  looked: {type:Boolean, default:true},
+  locked: {type:Boolean, default:true},
+  done: {type:Boolean, default:false}
 }, {
   timestamps: {
     createdAt: 'created_at',

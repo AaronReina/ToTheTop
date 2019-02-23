@@ -68,6 +68,7 @@ router.get("/loggedin", (req, res) => {
     res.status(401).json({ succes: "NO USER LOGGED IN" });
   }
 });
+
 router.get("/logout", (req, res) => {
   console.log("entra en la ruta logout");
   req.logout();

@@ -4,7 +4,7 @@ import { AuthAPI } from "../../lib/auth";
 import { connect } from "react-redux";
 import { login } from "../../lib/redux/actions";
 import { Header } from "../Header";
-import  Buttonn  from "../Buttonn";
+import Buttonn from "../Buttonn";
 
 export class _Signup extends Component {
   constructor() {
@@ -12,7 +12,8 @@ export class _Signup extends Component {
     this.state = {
       email: "",
       password: "",
-      imgPath: "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/userDefault.png",
+      imgPath:
+        "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/userDefault.png",
       name: ""
     };
   }
@@ -21,27 +22,30 @@ export class _Signup extends Component {
     let file = new FormData();
     file.set("name", name);
     file.append("photo", e.target.files[0], name);
-    AuthAPI.upload(file).then(({data})=> {  
-    this.setState({ imgPath: data.url })});
+    AuthAPI.upload(file).then(({ data }) => {
+      this.setState({ imgPath: data.url });
+    });
   };
   handleImgChange = e => {
     const name = this.username;
     let file = new FormData();
     file.set("name", name);
     file.append("photo", e.target.files[0], name);
-    AuthAPI.upload(file).then(({data})=> {  let statenow = this.state;
-    statenow.imgPath = data.url;
-    console.log(data.url)
-    this.setState({ state: statenow })})
+    AuthAPI.upload(file).then(({ data }) => {
+      let statenow = this.state;
+      statenow.imgPath = data.url;
+      console.log(data.url);
+      this.setState({ state: statenow });
+    });
   };
 
   handleSubmit() {
-    const { email, password, name , imgPath } = this.state;
+    const { email, password, name, imgPath } = this.state;
     const { dispatch } = this.props;
     AuthAPI.signup(email, password, name, imgPath)
       .then(user => {
         dispatch(login(user));
-        this.props.history.push("/")
+        this.props.history.push("/");
       })
       .catch(e => console.log("catch de handlesubmit" + e));
   }
@@ -60,21 +64,24 @@ export class _Signup extends Component {
       <div>
         <Header />
         <div>
+          <img
+            alt="img"
+            src={this.state.imgPath}
+          />
+          <Input
+            type="file"
+            onChange={e => this.handleImgChange(e)}
+            name="name"
+          />
           <Input text="Email" onChange={e => this.handleEmail(e)} />
           <Input text="Password" onChange={e => this.handlePass(e)} />
           <Input text="Name" onChange={e => this.handleName(e)} />
-         
-            <Input
-              type="file"
-              onChange={e => this.handleImgChange(e)}
-              name="name"
-            />
-           
-          <Buttonn onClick={() => this.handleSubmit()} info={"Lets Go!"}/>
+
+          <Buttonn onClick={() => this.handleSubmit()} info={"Lets Go!"} />
         </div>
       </div>
     );
   }
 }
 
-export const Signup = connect(store => ({user:store.user}))(_Signup);
+export const Signup = connect(store => ({ user: store.user }))(_Signup);

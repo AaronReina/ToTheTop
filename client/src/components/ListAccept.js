@@ -10,10 +10,10 @@ class ListAccept extends Component {
                     <div key={index}>
                       <p>
                         Name {e.name} 
-                        <button value={e.id}  onClick={this.props.onClick}>
+                        <button value={e.id} className="btn green"  onClick={(e)=>this.props.onClick(e)}>
                           Accept
                         </button>
-                        <button value={e.id}  onClick={this.props.onClick2}>
+                        <button value={e.id} className="btn red"  onClick={(e)=>this.props.onClick2(e)}>
                           Reject
                         </button>
                       </p>

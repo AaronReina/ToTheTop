@@ -12,9 +12,10 @@ const cors = require("cors");
 
 mongoose
   .connect(
-    "mongodb://localhost/server",
+    process.env.MONGO_URL == "production" ? "" : "mongodb://localhost/server",
     { useNewUrlParser: true }
   )
+
   .then(x => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -24,7 +25,7 @@ mongoose
     console.error("Error connecting to mongo", err);
   });
 
-const app_name = require("./package.json").name;
+const app_name = require("../package.json").name;
 const debug = require("debug")(
   `${app_name}:${path.basename(__filename).split(".")[0]}`
 );
@@ -72,13 +73,14 @@ app.use(
 );
 require("./passport")(app);
 
-const index = require("./routes/index");
-app.use("/", index);
-
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
 const events = require("./routes/events");
 app.use("/events", events);
+
+app.use("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 module.exports = app;

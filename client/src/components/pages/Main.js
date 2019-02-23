@@ -16,7 +16,13 @@ const Backgroundphoto = styled.div`
   text-align: center;
   color: white;
   width: 100%;
-  height: 30vh;
+  @media only screen and (min-width: 601px) {
+    height: 50vh;
+  }
+
+  @media only screen and (max-width: 600px) {
+    height: 30vh;
+  }
 `;
 const Title = styled.h1`
   display: inline-block;
@@ -27,12 +33,51 @@ const Title = styled.h1`
 `;
 const Text = styled.div`
   text-align: center;
-  color: rgb(231, 218, 215);
-  padding: 0 10%;
+  color: grey;
+  @media only screen and (min-width: 601px) {
+    padding: 5% 10%;
+  }
+
+  @media only screen and (max-width: 600px) {
+   
+    padding: 20% 10%;
+  }
+`;
+const MainBox = styled.div`
+  margin-top: 5%;
+  @media only screen and (min-width: 601px) {
+    width: 45%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+  }
+`;
+const NewChaBox = styled.div`
+  margin:10% 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+`;
+const ListEvents = styled.div`
+  margin-top: 5%;
+  @media only screen and (min-width: 601px) {
+    width: 33%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+  }
+`;
+
+const ImgUser = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 25px;
 `;
 
 class _Main extends Component {
-
   acceptEvent(e) {
     const { user, dispatch } = this.props;
     axios
@@ -54,23 +99,59 @@ class _Main extends Component {
       <div>
         <Header />
         {user ? (
-          <div>
-            <Link to="/Create">Create</Link>
-            <ListUser type="Privates" userdata={user.privated} />
-            <ListUser type="Challenges" userdata={user.challenged} />
-            <ListUser type="To Control" userdata={user.inspectors} />
-            <ListAccept
-              type="Accept challenges"
-              userdata={user.invitationCha}
-              onClick={e => this.acceptEvent(e)}
-              onClick2={e => this.rejectEvent(e)}
-            />
-            <ListAccept
-              type="Accept inspectors"
-              userdata={user.invitationIns}
-              onClick={e => this.acceptEvent(e)}
-              onClick2={e => this.rejectEvent(e)}
-            />
+          <div className="inline">
+            <MainBox>
+              <ImgUser src={user.imgPath} alt="User " />
+            </MainBox>
+            <MainBox>
+              <div className="info">
+                <div>
+                  <h1>{user.name} Events Panel</h1>
+                </div>
+                <div>
+                  <Link className="btn blue" to="/Create">
+                    Create new event
+                  </Link>
+                </div>
+              </div>
+            </MainBox>
+
+            <div>
+              <NewChaBox>
+                <ListEvents>
+                  <ListUser
+                    type="Your Private events"
+                    userdata={user.privated}
+                  />
+                </ListEvents>
+                <ListEvents>
+                  <ListUser type="Your Challenges" userdata={user.challenged} />
+                </ListEvents>
+                <ListEvents>
+                  <ListUser
+                    type="Your Controlled events"
+                    userdata={user.inspectors}
+                  />
+                </ListEvents>
+                <ListEvents>
+                  <ListAccept
+                    type="You have been challenged"
+                    userdata={user.invitationCha}
+                    onClick={e => this.acceptEvent(e)}
+                    onClick2={e => this.rejectEvent(e)}
+                  />
+                </ListEvents>
+
+                <ListEvents>
+                  <ListAccept
+                    type="Want to be an inspector?"
+                    userdata={user.invitationIns}
+                    onClick={e => this.acceptEvent(e)}
+                    onClick2={e => this.rejectEvent(e)}
+                  />
+                </ListEvents>
+              </NewChaBox>
+            </div>
           </div>
         ) : (
           <div>
@@ -97,3 +178,4 @@ class _Main extends Component {
 }
 
 export const Main = connect(store => ({ user: store.user }))(_Main);
+

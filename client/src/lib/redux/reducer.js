@@ -1,6 +1,7 @@
 const initialStore = {
     user: null,
     image: "",
+    events: null,
     messages:[]
 }
 
@@ -37,13 +38,15 @@ export const rootReducer = (store = initialStore, action) => {
             }
         break;
         case "LOGGED_IN":
-        store = {
-            ...store,
-            user: action.user
-            }
+            store = {
+                ...store,
+                user: action.user
+                }
         break;
+        
         default: return store
     }
    
     return store
 }
+

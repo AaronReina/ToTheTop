@@ -26,20 +26,17 @@ router.post("/unLock/:id", (req, res, next) => {
   const { id } = req.params;
   Rewards.findByIdAndUpdate(id, {
         locked:false
-      })
+      },{new:true})
     .then(e => res.json(e))
     .catch(e => console.log(e));
 });
 
 router.post("/actualValue/:id", (req, res, next) => {
   const { id } = req.params;
-  const { progress, photo } = req.body.state;
-  console.log(id)
-  console.log(progress)
-  console.log(photo)
+  const { progress, photo } = req.body.event;
   Events.findByIdAndUpdate(id, {
     actualValue:progress , imgPath:photo 
-      })
+      },{new:true})
     .then(e => res.json(e))
     .catch(err => console.log(err));
 });
@@ -50,7 +47,7 @@ router.post("/complete/:id", (req, res, next) => {
         locked:false,
         done:true,
         surprise:false
-      })
+      },{new:true})
     .then(e => res.json(e))
     .catch(e => console.log(e));
 });

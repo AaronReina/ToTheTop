@@ -44,8 +44,8 @@ class _Header extends Component {
       : this.props.event === "private"
       ? (color = "black")
       : this.props.user
-      ? (color = "blue")
-      : (color = "rgb(231, 218, 215)");
+      ? (color = "#242582")
+      : (color = " #553D67");
     return (
       <Head color={color}>
         <Link to="/">
@@ -65,7 +65,7 @@ class _Header extends Component {
           </div>
         ) : (
           <div>
-            <StyledLink to="/auth/login">Loggin</StyledLink>
+            <StyledLink to="/auth/login">Login</StyledLink>
             <StyledLink to="/auth/signup">Signup </StyledLink>
           </div>
         )}

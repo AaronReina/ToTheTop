@@ -1,32 +1,215 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding:0;
+ }
+
+.view {
+  margin: 10px;
+  float: left;
+  border: 10px solid #fff;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  box-shadow: 1px 1px 2px #e6e6e6;
+  cursor: default;
+ 
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.view .mask,
+.view .content {
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.view img {
+  display: block;
+  position: relative
+}
+
+.view h2 {
+  color: #fff;
+  text-align: left;
+  position: relative;
+  font-size: 17px;
+  padding: 10px;
+  margin: 20px 0 0 0
+}
+
+.view-second img {
+  height: 200px;
+  transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+}
+
+.view-second .mask {
+  background-color: rgba(12, 19, 27, 0.6);
+  width: 300px;
+  padding: 105px;
+  height: 200px;
+  opacity: 0;
+  transform: translate(265px, 145px) rotate(45deg);
+  -webkit-transform: translate(265px, 145px) rotate(45deg);
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+}
+
+.view-second h2 {
+  background: transparent;
+  margin: 20px 40px 0px 40px;
+  -webkit-transform: translate(200px, -200px);
+  transform: translate(200px, -200px);
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.view-second a.info {
+  transform: translate(0px, 100px);
+  -webkit-transform: translate(0px, 100px);
+  transition: all 0.2s 0.1s ease-in-out;
+  -webkit-transition: all 0.2s 0.1s ease-in-out;
+}
+
+.view-second:hover .mask {
+  opacity: 1;
+  transform: translate(-80px, -125px) rotate(45deg);
+  -webkit-transform: translate(-80px, -125px) rotate(45deg);
+}
+
+.view-second:hover h2 {
+  transform: translate(0px, 0px);
+  -webkit-transform: translate(0px, 0px);
+  transition-delay: 0.3s;
+  -webkit-transition-delay: 0.3s;
+}
+
+
+.view-second:hover a.info {
+  transform: translate(0px, 0px);
+  -webkit-transform: translate(0px, 0px);
+  transition-delay: 0.5s;
+  -webkit-transition-delay: 0.5s;
+}
+.inline{
   display: flex;
-  flex-direction: column;
+  flex-wrap:wrap;
+  justify-content:center;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top:3vh;
+}
+.info{
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align: center;
+  align-items: center;
+  margin-left:10%;
+  margin-right:10%
 }
 
-.App-link {
-  color: #61dafb;
+.main {
+ margin: 20px auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main ul {
+ list-style: none;
+ margin: 0;
+ padding: 0;
 }
+
+.main li {
+ text-decoration: none;
+ font: 14px ;
+ border-bottom: 1px solid #999;
+}
+
+.main li:first-child {
+ border-top: 1px solid #999;
+}
+
+.main li  {
+ text-decoration:none;
+ color: #999;
+ display: block;
+ height: 40px;
+ line-height: 40px;
+ 
+ /* transitions and animations */
+ -webkit-transition: font-size 0.3s ease, background-color 1s ease;
+ -moz-transition: font-size 0.3s ease, background-color 1s ease;
+ -ms-transition: font-size 0.3s ease, background-color 1s ease;
+ -o-transition: font-size 0.3s ease, background-color 1s ease;
+ transition: font-size 0.3s ease, background-color 1s ease;
+}
+
+.main li:hover {
+ font: 18px;
+ line-height: 40px;
+ text-decoration: none;
+ color: #999;
+ background: #e3e3e3;
+}
+.btn {
+ border-radius: 5px;
+ font-size: 14px;
+ padding:3px;
+ text-decoration: none;
+ margin: 20px;
+ color: #fff;
+ position: relative;
+ display: inline-block;
+ border:none;
+ outline:none;
+}
+
+.btn:active {
+ transform: translate(0px, 5px);
+ -webkit-transform: translate(0px, 5px);
+ box-shadow: 0px 1px 0px 0px;
+ border:none;
+ outline:none;
+}
+
+.red {
+ background-color:  #ff0000;
+ box-shadow: 0px 5px 0px 0px #990000
+ ;
+}
+
+.red:hover {
+ background-color:  #ff4d4d;
+ cursor:pointer;
+ border: none;
+ outline:none;
+}
+.green {
+  background-color: #33cc33;
+  box-shadow: 0px 5px 0px 0px #1f7a1f;
+ }
+ 
+ .green:hover {
+  background-color: #71da71;
+  cursor:pointer;
+  border: none;
+  outline:none;
+ }
+ .blue {
+  background-color: #242582;
+  box-shadow: 0px 5px 0px 0px #12048da4;
+ }
+ 
+ .blue:hover {
+  background-color: #244282;
+  cursor:pointer;
+  border: none;
+  outline:none;
+ }
+
+
+
+
+
+ 

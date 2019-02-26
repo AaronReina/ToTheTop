@@ -11,10 +11,7 @@ const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
 
 mongoose
-  .connect(
-    process.env.MONGO_URL == "production" ? "" : "mongodb://localhost/server",
-    { useNewUrlParser: true }
-  )
+  .connect(process.env.MONGO_URL, {useNewUrlParser:true})
 
   .then(x => {
     console.log(

@@ -22,10 +22,16 @@ export class _Events extends Component {
   }
   eventHandler() {
     const { user } = this.props;
+
     return axios
-      .post(`http://localhost:3000/events/type/${this.props.match.params.id}`, {
-        user
-      })
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/type/${this.props.match.params.id}`
+          : `http://localhost:3000/events/type/${this.props.match.params.id}`,
+        {
+          user
+        }
+      )
       .then(res => {
         this.setState({ type: res.data.type });
       })
@@ -35,7 +41,11 @@ export class _Events extends Component {
   eventHandler2() {
     return axios
       .post(
-        `http://localhost:3000/events/populate/${this.props.match.params.id}`
+        process.env.NODE_ENV === "production"
+          ? `/events/populate/${this.props.match.params.id}`
+          : `http://localhost:3000/events/populate/${
+              this.props.match.params.id
+            }`
       )
       .then(res => {
         this.setState({
@@ -56,7 +66,12 @@ export class _Events extends Component {
 
   unLock = e => {
     return axios
-      .post(`http://localhost:3000/events/unLock/${e}`)
+
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/unLock/${e}`
+          : `http://localhost:3000/events/unLock/${e}`
+      )
       .then(res => {
         let newState = [...this.state.rewards];
         newState = newState.map(reward =>
@@ -71,9 +86,15 @@ export class _Events extends Component {
   actualValue = value => {
     const state = this.state;
     return axios
-      .post(`http://localhost:3000/events/actualValue/${state.id}`, {
-        event: { ...state, progress: value }
-      })
+
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/actualValue/${state.id}`
+          : `http://localhost:3000/events/actualValue/${state.id}`,
+        {
+          event: { ...state, progress: value }
+        }
+      )
       .then(res => {
         this.setState({ actualValue: res.data.actualValue });
       })
@@ -81,9 +102,12 @@ export class _Events extends Component {
   };
   complete = e => {
     return axios
-      .post(`http://localhost:3000/events/complete/${e}`)
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/complete/${e}`
+          : `http://localhost:3000/events/complete/${e}`
+      )
       .then(res => {
-     
         let newState = [...this.state.rewards];
         newState = newState.map(reward =>
           reward._id === res.data._id ? res.data : reward
@@ -116,7 +140,7 @@ export class _Events extends Component {
     return (
       <div>
         <Header event={this.state.type} />
-        <div className="inline" >
+        <div className="inline">
           {!this.props.user ? (
             <div>
               <p>please log in</p>

@@ -8,9 +8,8 @@ import AddUsers from "../AddUsers";
 import ShowUsers from "../ShowUsers";
 import ShowRewards from "../ShowRewards";
 import { AuthAPI } from "../../lib/auth.js";
-import {loggedIn} from "../../lib/redux/actions";
-import {withRouter} from 'react-router'
-
+import { loggedIn } from "../../lib/redux/actions";
+import { withRouter } from "react-router";
 
 class _Create extends Component {
   constructor() {
@@ -28,7 +27,8 @@ class _Create extends Component {
         name: "",
         goal: "",
         text: "",
-        imgPath: "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
+        imgPath:
+          "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
         surprise: false
       },
       rewards: [],
@@ -38,28 +38,38 @@ class _Create extends Component {
       temporal: {
         challenged: "",
         inspectors: []
-      },
+      }
     };
   }
-    handleImgChange = e => {
+  handleImgChange = e => {
     const name = this.username;
     let file = new FormData();
     file.set("name", name);
     file.append("photo", e.target.files[0], name);
-    AuthAPI.upload(file).then(({data})=> {  let statenow = this.state.reward;
-    statenow.imgPath = data.url;
-    this.setState({ reward: statenow })})
+    AuthAPI.upload(file).then(({ data }) => {
+      let statenow = this.state.reward;
+      statenow.imgPath = data.url;
+      this.setState({ reward: statenow });
+    });
   };
 
   createEventHandler() {
     const state = this.state;
 
     return axios
-   
 
-      .post(process.env.NODE_ENV === "production" ? "/events/create": `http://localhost:3000/events/create`, { state })
+      .post(
+        process.env.NODE_ENV === "production"
+          ? "/events/create"
+          : `http://localhost:3000/events/create`,
+        { state }
+      )
       .then(res => {
-        AuthAPI.loggedIn().then((user)=>{ this.props.loggedIn(user)} ).catch((err)=>console.log(err))
+        AuthAPI.loggedIn()
+          .then(user => {
+            this.props.loggedIn(user);
+          })
+          .catch(err => console.log(err));
         this.props.history.push("/");
       })
       .catch(err => console.log(err));
@@ -71,7 +81,11 @@ class _Create extends Component {
     });
     e.target.value &&
       axios
-        .post(`http://localhost:3000/events/searchUser/${e.target.value}`)
+        .post(
+          process.env.NODE_ENV === "production"
+            ? `/events/searchUser/${e.target.value}`
+            : `http://localhost:3000/events/searchUser/${e.target.value}`
+        )
         .then(element => {
           this.setState({
             userList: element.data
@@ -148,7 +162,8 @@ class _Create extends Component {
         name: "",
         goal: "",
         text: "",
-        imgPath: "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
+        imgPath:
+          "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
         surprise: this.state.reward.surprise
       }
     });
@@ -198,7 +213,7 @@ class _Create extends Component {
 
   render() {
     return (
-      <div >
+      <div>
         <Header />
         <div className="info">
           {!this.props.user ? (
@@ -233,8 +248,8 @@ class _Create extends Component {
                 text="Name of the event"
                 onChange={e => this.handleEventname(e)}
               />
-            
-               <label>"Type of the event"</label>
+
+              <label>"Type of the event"</label>
               <select id="types" onChange={e => this.handleEventype(e)}>
                 <option>Basic</option>
                 <option>Smoke</option>
@@ -265,11 +280,11 @@ class _Create extends Component {
                 type="checkbox"
                 onChange={() => this.handleRewarsuprise()}
               />
-               <Input
-                  type="file"
-                  onChange={e => this.handleImgChange(e)}
-                  name="name"
-                />
+              <Input
+                type="file"
+                onChange={e => this.handleImgChange(e)}
+                name="name"
+              />
               <Buttonn
                 onClick={e => this.handleRewardPush(e)}
                 info={"Add this Reward"}
@@ -290,5 +305,9 @@ class _Create extends Component {
   }
 }
 
-export const Create = withRouter(connect(store => ({ user: store.user }),{loggedIn})(_Create));
-
+export const Create = withRouter(
+  connect(
+    store => ({ user: store.user }),
+    { loggedIn }
+  )(_Create)
+);

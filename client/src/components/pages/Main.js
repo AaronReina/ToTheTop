@@ -67,14 +67,22 @@ class _Main extends Component {
   acceptEvent(e) {
     const { user, dispatch } = this.props;
     axios
-      .post(`http://localhost:3000/events/accept/${e.target.value}`, { user })
+    .post(
+      process.env.NODE_ENV === "production"
+        ? `/events/accept/${e.target.value}`
+        : `http://localhost:3000/events/accept/${e.target.value}`
+    , { user })
       .then(res => dispatch({ type: "LOGIN", user: res.data }))
       .catch(err => console.log(err));
   }
   rejectEvent(e) {
     const { user, dispatch } = this.props;
     axios
-      .post(`http://localhost:3000/events/reject/${e.target.value}`, { user })
+    .post(
+      process.env.NODE_ENV === "production"
+        ? `/events/accept/${e.target.value}`
+        : `http://localhost:3000/events/reject/${e.target.value}`
+    , { user })
       .then(res => dispatch({ type: "LOGIN", user: res.data }))
       .catch(err => console.log(err));
   }

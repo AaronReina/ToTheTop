@@ -54,7 +54,9 @@ class _Create extends Component {
   createEventHandler() {
     const state = this.state;
     return axios
-      .post(`http://localhost:3000/events/create`, { state })
+   
+
+      .post(process.env.NODE_ENV === "production" ? "/events/create": `http://localhost:3000/events/create`, { state })
       .then(res => {
         AuthAPI.loggedIn().then((user)=>{ this.props.loggedIn(user)} ).catch((err)=>console.log(err))
         this.props.history.push("/");

@@ -116,7 +116,7 @@ export class _Events extends Component {
     return (
       <div>
         <Header event={this.state.type} />
-        <div>
+        <div className="inline" >
           {!this.props.user ? (
             <div>
               <p>please log in</p>
@@ -126,7 +126,7 @@ export class _Events extends Component {
             this.state.type !== "inspector" ? (
             <p>you have no access to this challenge</p>
           ) : (
-            <div>
+            <div className="inline info">
               <EventInfo
                 event={this.state}
                 unLock={this.unLock}

@@ -43,18 +43,9 @@ const Text = styled.div`
     padding: 20% 10%;
   }
 `;
-const MainBox = styled.div`
-  margin-top: 5%;
-  @media only screen and (min-width: 601px) {
-    width: 45%;
-  }
 
-  @media only screen and (max-width: 600px) {
-    width: 80%;
-  }
-`;
 const NewChaBox = styled.div`
-  margin:10% 0;
+  margin:10% 5%;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -70,12 +61,7 @@ const ListEvents = styled.div`
   }
 `;
 
-const ImgUser = styled.img`
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-  border-radius: 25px;
-`;
+
 
 class _Main extends Component {
   acceptEvent(e) {
@@ -99,11 +85,11 @@ class _Main extends Component {
       <div>
         <Header />
         {user ? (
-          <div className="inline">
-            <MainBox>
-              <ImgUser src={user.imgPath} alt="User " />
-            </MainBox>
-            <MainBox>
+          <div >
+            <div className="respBox">
+              <img className="imgFit" src={user.imgPath} alt="User " />
+            </div>
+            <div className="respBox">
               <div className="info">
                 <div>
                   <h1>{user.name} Events Panel</h1>
@@ -114,25 +100,27 @@ class _Main extends Component {
                   </Link>
                 </div>
               </div>
-            </MainBox>
+            </div>
 
             <div>
               <NewChaBox>
-                <ListEvents>
+               {user.privated.length >0  && <ListEvents>
                   <ListUser
                     type="Your Private events"
                     userdata={user.privated}
                   />
-                </ListEvents>
-                <ListEvents>
+                </ListEvents>}
+                {user.challenged.length >0 &&<ListEvents>
                   <ListUser type="Your Challenges" userdata={user.challenged} />
-                </ListEvents>
+                </ListEvents>}
+                {user.inspectors.length >0 &&
                 <ListEvents>
                   <ListUser
                     type="Your Controlled events"
                     userdata={user.inspectors}
                   />
-                </ListEvents>
+                </ListEvents>}
+                {user.invitationCha.length >0 &&
                 <ListEvents>
                   <ListAccept
                     type="You have been challenged"
@@ -140,16 +128,16 @@ class _Main extends Component {
                     onClick={e => this.acceptEvent(e)}
                     onClick2={e => this.rejectEvent(e)}
                   />
-                </ListEvents>
-
+                </ListEvents>}
+              {user.invitationIns.length >0 &&
                 <ListEvents>
                   <ListAccept
-                    type="Want to be an inspector?"
+                    type="Want yo inspect this?"
                     userdata={user.invitationIns}
                     onClick={e => this.acceptEvent(e)}
                     onClick2={e => this.rejectEvent(e)}
                   />
-                </ListEvents>
+                </ListEvents>}
               </NewChaBox>
             </div>
           </div>

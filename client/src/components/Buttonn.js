@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 
 const Button = styled.button`
   margin-top: 20px;
-  margin-left: 30%;
   padding: 16px 0;
   width: 40%;
   color: white;
@@ -13,7 +12,6 @@ const Button = styled.button`
   letter-spacing: 1px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
 `;
 
 class Buttonn extends Component {

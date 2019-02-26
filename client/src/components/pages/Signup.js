@@ -64,10 +64,9 @@ export class _Signup extends Component {
       <div>
         <Header />
         <div>
-          <img
-            alt="img"
-            src={this.state.imgPath}
-          />
+          <div className="respBox">
+            <img className="imgFit" alt="img" src={this.state.imgPath} />
+          </div>
           <Input
             type="file"
             onChange={e => this.handleImgChange(e)}
@@ -76,8 +75,9 @@ export class _Signup extends Component {
           <Input text="Email" onChange={e => this.handleEmail(e)} />
           <Input text="Password" onChange={e => this.handlePass(e)} />
           <Input text="Name" onChange={e => this.handleName(e)} />
-
+          <div className="info">
           <Buttonn onClick={() => this.handleSubmit()} info={"Lets Go!"} />
+        </div>
         </div>
       </div>
     );

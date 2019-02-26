@@ -12,6 +12,7 @@
   text-align: left;
   box-shadow: 1px 1px 2px #e6e6e6;
   cursor: default;
+  
  
 }
 
@@ -98,6 +99,12 @@
   flex-wrap:wrap;
   justify-content:center;
   align-items: center;
+  margin-top:2vh;
+}
+.zones{
+  display: flex;
+  flex-wrap:nowrap;
+  justify-content:space-around;
   margin-top:3vh;
 }
 .info{
@@ -111,16 +118,19 @@
 }
 
 .main {
+  text-align: center;
  margin: 20px auto;
 }
 
 .main ul {
+  text-align: center;
  list-style: none;
  margin: 0;
  padding: 0;
 }
 
 .main li {
+  text-align: center;
  text-decoration: none;
  font: 14px ;
  border-bottom: 1px solid #999;
@@ -154,17 +164,25 @@
 }
 .btn {
  border-radius: 5px;
- font-size: 14px;
+ font-size: 10px;
  padding:3px;
+ margin:2%;
  text-decoration: none;
- margin: 20px;
  color: #fff;
  position: relative;
  display: inline-block;
  border:none;
  outline:none;
 }
-
+.confirmBox {
+  background-color: whitesmoke;
+ text-align: center;
+  border-radius: 5px;
+  padding: 3%;
+  margin:2%;
+  border:1px solid black;
+  outline:none;
+ }
 .btn:active {
  transform: translate(0px, 5px);
  -webkit-transform: translate(0px, 5px);
@@ -207,9 +225,54 @@
   border: none;
   outline:none;
  }
-
-
-
+ .imgFit{
+   display: flex;
+   align-items: center;
+   justify-items: center;
+ height: 100%;
+ width: 100%;
+ object-fit: contain;
+ border-radius: 25px;
+ }
 
 
  
+ @media only screen and (min-width: 601px) {
+  .respBox{
+    margin: 5% 10%;
+   width: 45%;
+ }
+ }
+ @media only screen and (max-width: 600px) {
+  .respBox{
+    margin: 5% 10%;
+   width: 80%;
+ }
+ }
+
+
+
+ .spin img{
+  animation: spin 4s ease-in-out forwards  ;
+  animation-play-state: start;
+}
+
+
+@keyframes spin {
+0%{
+  width: 100%;
+  height: 100%;
+}
+50% {
+  width: 0%;
+  height: 0%;
+}
+  100% {
+    transform: rotate(2turn);
+    width: 100%;
+    height: 100%;
+  }
+}
+
+  
+

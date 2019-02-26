@@ -7,9 +7,9 @@ class ListAccept extends Component {
                 <h3>{this.props.type}</h3>
                 <div>
                   {this.props.userdata.map((e, index) => (
-                    <div key={index}>
+                    <div className="confirmBox" key={index}>
                       <p>
-                        Name {e.name} 
+                         {e.name} 
                         <button value={e.id} className="btn green"  onClick={(e)=>this.props.onClick(e)}>
                           Accept
                         </button>

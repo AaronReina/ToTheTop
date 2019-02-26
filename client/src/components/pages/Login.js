@@ -29,10 +29,12 @@ handleLogin(){
         
       <div>
           <Header/>
-           <div>
+           <div >
         <Input text="Email" onChange={e => this.setState({email:e.target.value})} />
         <Input text="Password" onChange={e => this.setState({password:e.target.value})}/>
-        <Buttonn onClick={() => this.handleLogin()}  info="Login"/>
+        <div className="info">
+        <Buttonn  onClick={() => this.handleLogin()}  info="Login"/>
+      </div>
       </div>
       </div>
     );

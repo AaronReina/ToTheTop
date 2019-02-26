@@ -7,6 +7,7 @@ const User = require("../models/User");
 router.post("/type/:id", (req, res, next) => {
   const { user } = req.body;
   const { id } = req.params;
+  if(!user){return}
   Events.findById(id, (err, event) => {
     let typeFinal;
     !event

@@ -39,7 +39,6 @@ class _Create extends Component {
         challenged: "",
         inspectors: []
       },
-     
     };
   }
     handleImgChange = e => {
@@ -147,7 +146,7 @@ class _Create extends Component {
         goal: "",
         text: "",
         imgPath: "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
-        surprise: false
+        surprise: this.state.reward.surprise
       }
     });
   }
@@ -196,9 +195,9 @@ class _Create extends Component {
 
   render() {
     return (
-      <div>
+      <div >
         <Header />
-        <div>
+        <div className="info">
           {!this.props.user ? (
             <div>
               <p>please log in</p>

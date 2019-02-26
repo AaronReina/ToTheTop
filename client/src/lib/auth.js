@@ -27,7 +27,7 @@ export class AuthAPI {
     }
 
     static signup(email, password ,name, imgPath){
-        console.log("entra signup")
+      
         return instance.post('/auth/signup',{email, password, name, imgPath})
         .then((res) => res.data.user)
         .catch(AuthAPI.errorHandler)

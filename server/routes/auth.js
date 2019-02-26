@@ -26,6 +26,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
+  console.log("entra signup")
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;

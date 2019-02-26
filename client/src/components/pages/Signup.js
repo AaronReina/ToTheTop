@@ -40,10 +40,12 @@ export class _Signup extends Component {
   };
 
   handleSubmit() {
+    console.log("ha entrado")
     const { email, password, name, imgPath } = this.state;
     const { dispatch } = this.props;
     AuthAPI.signup(email, password, name, imgPath)
       .then(user => {
+        console.log("ha salido")
         dispatch(login(user));
         this.props.history.push("/");
       })

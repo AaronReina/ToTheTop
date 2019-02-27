@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const eventsSchema = new Schema(
   {
     name: String,
-    type: { type: String, enum: ["Basic", "Smoke", "Weigth", "fit"] },
+    type: { type: String, default:false, enum: ["Basic", "Smoke", "Weigth", "fit"] },
     privated: [{type:Schema.Types.ObjectId, ref:"User"}] ,
     challenged: {type:Schema.Types.ObjectId, ref:"User"} ,
     inspectors: [{type:Schema.Types.ObjectId, ref:"User"}] ,

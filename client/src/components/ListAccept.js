@@ -9,12 +9,12 @@ class ListAccept extends Component {
                   {this.props.userdata.map((e, index) => (
                     <div className="confirmBox" key={index}>
                       <p>
-                         {e.name} 
-                        <button value={e.id} className="btn green"  onClick={(e)=>this.props.onClick(e)}>
-                          Accept
+                         {e.name} {e.email}
+                        <button value={e.id?e.id:e._id} name={e.name} className={`btn ${this.props.color1}` } onClick={(e)=>this.props.onClick(e)}>
+                          {this.props.option1}
                         </button>
-                        <button value={e.id} className="btn red"  onClick={(e)=>this.props.onClick2(e)}>
-                          Reject
+                        <button value={e.id?e.id:e._id} name={e.name} className={`btn ${this.props.color2}`} onClick={(e)=>this.props.onClick2(e)}>
+                          {this.props.option2}
                         </button>
                       </p>
                     </div>

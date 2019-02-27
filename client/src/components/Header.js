@@ -4,14 +4,22 @@ import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { AuthAPI } from "../lib/auth";
 import { logout } from "../lib/redux/actions";
+
+
+const Fixed = styled.div`
+ position: fixed; 
+  top: 0; 
+  width: 100%; 
+`;
+
 const Head = styled.div`
-  position: static;
   background-color: ${props => props.color};
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 12vh;
   padding: 0 5%;
+ 
 `;
 
 const Logo = styled.img`
@@ -40,13 +48,14 @@ class _Header extends Component {
     this.props.event === "challenged"
       ? (color = "purple")
       : this.props.event === "inspector"
-      ? (color = "red")
+      ? (color = "orange")
       : this.props.event === "private"
       ? (color = "black")
       : this.props.user
       ? (color = "#242582")
       : (color = " #553D67");
     return (
+      <Fixed>
       <Head color={color}>
         <Link to="/">
           <div>
@@ -70,6 +79,7 @@ class _Header extends Component {
           </div>
         )}
       </Head>
+      </Fixed>
     );
   }
 }

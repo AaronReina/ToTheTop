@@ -95,15 +95,15 @@ class _Main extends Component {
         {user ? (
           <div >
             <div className="respBox">
-              <img className="imgFit" src={user.imgPath} alt="User " />
+              <img className="imgFit marginTop" src={user.imgPath} alt="User " />
             </div>
             <div className="respBox">
               <div className="info">
                 <div>
-                  <h1>{user.name} Events Panel</h1>
+                  <h1>{user.name} Events </h1>
                 </div>
                 <div>
-                  <Link className="btn blue" to="/Create">
+                  <Link className="btnbig blue" to="/Create">
                     Create new event
                   </Link>
                 </div>
@@ -131,7 +131,11 @@ class _Main extends Component {
                 {user.invitationCha.length >0 &&
                 <ListEvents>
                   <ListAccept
+                  color1="green"
+                  color2="red"
                     type="You have been challenged"
+                    option1="Accept"
+                    option2="reject"
                     userdata={user.invitationCha}
                     onClick={e => this.acceptEvent(e)}
                     onClick2={e => this.rejectEvent(e)}
@@ -142,6 +146,10 @@ class _Main extends Component {
                   <ListAccept
                     type="Want yo inspect this?"
                     userdata={user.invitationIns}
+                    color1="green"
+                    color2="red"
+                    option1="Accept"
+                    option2="reject"
                     onClick={e => this.acceptEvent(e)}
                     onClick2={e => this.rejectEvent(e)}
                   />

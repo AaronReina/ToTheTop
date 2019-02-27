@@ -2,7 +2,9 @@
   margin: 0;
   padding:0;
  }
-
+body{
+  margin-top:12vh
+}
 
 
 .view {
@@ -172,11 +174,22 @@
  margin:2%;
  text-decoration: none;
  color: #fff;
- position: relative;
  display: inline-block;
  border:none;
  outline:none;
 }
+
+.btnbig {
+  border-radius: 5px;
+  font-size: 20px;
+  padding:5px;
+  margin:3%;
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  border:none;
+  outline:none;
+ }
 .confirmBox {
   background-color: whitesmoke;
  text-align: center;
@@ -194,6 +207,30 @@
  outline:none;
 }
 
+.orange {
+  background-color: orange;
+  box-shadow: 0px 5px 0px 0px rgba(255, 166, 0, 0.596)
+  ;
+ }
+ 
+ .orange:hover {
+  background-color:  rgb(245, 189, 84);
+  cursor:pointer;
+  border: none;
+  outline:none;
+ }
+ .purple {
+  background-color: purple;
+  box-shadow: 0px 5px 0px 0px rgba(128, 0, 128, 0.37)
+  ;
+ }
+ 
+ .purple:hover {
+  background-color:  rgb(155, 9, 155);
+  cursor:pointer;
+  border: none;
+  outline:none;
+ }
 .red {
  background-color:  #ff0000;
  box-shadow: 0px 5px 0px 0px #990000
@@ -238,6 +275,9 @@
  border-radius: 25px;
  }
 
+ .marginTop{
+   margin-top: 16vh;
+ }
 
  
  @media only screen and (min-width: 601px) {
@@ -263,17 +303,18 @@
 
 @keyframes spin {
 0%{
-  width: 100%;
+  width: 80%;
   height: 100%;
 }
 50% {
+  padding-left: 100%;
   width: 0%;
   height: 0%;
 }
   100% {
     transform: rotate(2turn);
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
   }
 }
 

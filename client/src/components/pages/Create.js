@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import { Header } from "../Header";
 import Buttonn from "../Buttonn";
 import axios from "axios";
-import AddUsers from "../AddUsers";
 import ShowUsers from "../ShowUsers";
 import ShowRewards from "../ShowRewards";
 import { AuthAPI } from "../../lib/auth.js";
 import { loggedIn } from "../../lib/redux/actions";
 import { withRouter } from "react-router";
+import InputCheck from "../InputCheck";
+import ListAccept from "../ListAccept";
 
 class _Create extends Component {
   constructor() {
@@ -121,6 +122,7 @@ class _Create extends Component {
     ) {
       return "";
     }
+    console.log(e.target.value)
     statenow.event.inspectors.push(e.target.value);
     statenow.temporal.inspectors.push(e.target.name);
     this.setState({ state: statenow });
@@ -129,6 +131,7 @@ class _Create extends Component {
 
   addToChallenged(e) {
     let statenow = this.state;
+    console.log(e.target.value)
     if (
       statenow.event.inspectors.includes(e.target.value) ||
       statenow.event.challenged === e.target.value
@@ -222,18 +225,23 @@ class _Create extends Component {
             </div>
           ) : (
             <div>
-              <Input
-                text="Click make it private"
+              <InputCheck
+              id="private"
+                text="Click to make this event private"
                 type="checkbox"
                 onChange={() => this.privateEvent()}
               />
               {this.state.private || (
                 <div>
                   <Input
-                    text="Looking for friends"
+                    text="or type an email to looking for friends"
                     onChange={e => this.filterUsers(e)}
                   />
-                  <AddUsers
+                  <ListAccept
+                     color1="purple"
+                     color2="orange"
+                  option1="Challenged"
+                  option2="Inspector"
                     onClick={e => this.addToChallenged(e)}
                     onClick2={e => this.addToInspector(e)}
                     userdata={this.state.userList}
@@ -275,7 +283,8 @@ class _Create extends Component {
                 value={this.state.reward.text}
                 onChange={e => this.handleRewardtext(e)}
               />
-              <Input
+              <InputCheck
+              id="surprise"
                 text="Is a surprise?"
                 type="checkbox"
                 onChange={() => this.handleRewarsuprise()}
@@ -286,6 +295,7 @@ class _Create extends Component {
                 name="name"
               />
               <Buttonn
+              className="btnbig blue" 
                 onClick={e => this.handleRewardPush(e)}
                 info={"Add this Reward"}
               />
@@ -293,10 +303,12 @@ class _Create extends Component {
                 onClick={() => this.clearRewards()}
                 userdata={this.state.rewards}
               />
+              {this.state.rewards.length>0 &&
               <Buttonn
+              className="btnbig green" 
                 onClick={() => this.createEventHandler()}
                 info={"Create Event"}
-              />
+              />}
             </div>
           )}
         </div>

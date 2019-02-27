@@ -246,7 +246,9 @@ class _Create extends Component {
                     onClick2={e => this.addToInspector(e)}
                     userdata={this.state.userList}
                   />
+                  
                   <ShowUsers
+                   className="btn red"
                     onClick={e => this.clearUsers(e)}
                     userdata={this.state.temporal}
                   />
@@ -299,16 +301,20 @@ class _Create extends Component {
                 onClick={e => this.handleRewardPush(e)}
                 info={"Add this Reward"}
               />
-              <ShowRewards
-                onClick={() => this.clearRewards()}
-                userdata={this.state.rewards}
-              />
+              
               {this.state.rewards.length>0 &&
+              <React.Fragment>
+              <ShowRewards
+              className="btn red"
+              onClick={() => this.clearRewards()}
+              userdata={this.state.rewards}
+            />
               <Buttonn
               className="btnbig green" 
                 onClick={() => this.createEventHandler()}
                 info={"Create Event"}
-              />}
+              />
+               </React.Fragment>}
             </div>
           )}
         </div>

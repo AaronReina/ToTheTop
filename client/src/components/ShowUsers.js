@@ -15,7 +15,7 @@ class ShowUsers extends Component {
               </p>
             </div>
           ))}
-          <button onClick={this.props.onClick}>Delete selection</button>
+          <button className={this.props.className} onClick={this.props.onClick}>Delete selection</button>
         </div>
       </div>
     );

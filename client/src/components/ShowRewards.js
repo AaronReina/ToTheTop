@@ -4,7 +4,7 @@ class ShowRewards extends Component {
   render() {
     return (
       <div>
-        <h3>Inspectors</h3>
+        <h3>Rewards</h3>
           {this.props.userdata.map((e, index) => (
             <div key={index}>
               <p>
@@ -12,7 +12,7 @@ class ShowRewards extends Component {
               </p>
             </div>
           ))}
-          <button onClick={this.props.onClick}>Delete Rewards</button>
+          <button className={this.props.className} onClick={this.props.onClick}>Delete Rewards</button>
         </div>
      
     );

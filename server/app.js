@@ -28,7 +28,7 @@ const debug = require("debug")(
 );
 
 const app = express();
-const whitelist = ["http://localhost:3000", "http://localhost:3001"];
+const whitelist = ["http://localhost:3000", "http://localhost:8000"];
 const corsOptions = {
   origin: function(origin, callback) {
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;

@@ -65,7 +65,7 @@ export class _Signup extends Component {
     return (
       <div>
         <Header />
-        <div>
+        <div className="marginTop">
           <div className="respBox">
             <img className="imgFit" alt="img" src={this.state.imgPath} />
           </div>

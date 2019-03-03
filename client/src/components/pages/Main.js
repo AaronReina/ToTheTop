@@ -39,13 +39,12 @@ const Text = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-   
     padding: 20% 10%;
   }
 `;
 
 const NewChaBox = styled.div`
-  margin:10% 5%;
+  margin: 10% 5%;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -61,28 +60,28 @@ const ListEvents = styled.div`
   }
 `;
 
-
-
 class _Main extends Component {
   acceptEvent(e) {
     const { user, dispatch } = this.props;
     axios
-    .post(
-      process.env.NODE_ENV === "production"
-        ? `/events/accept/${e.target.value}`
-        : `http://localhost:3000/events/accept/${e.target.value}`
-    , { user })
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/accept/${e.target.value}`
+          : `http://localhost:3000/events/accept/${e.target.value}`,
+        { user }
+      )
       .then(res => dispatch({ type: "LOGIN", user: res.data }))
       .catch(err => console.log(err));
   }
   rejectEvent(e) {
     const { user, dispatch } = this.props;
     axios
-    .post(
-      process.env.NODE_ENV === "production"
-        ? `/events/accept/${e.target.value}`
-        : `http://localhost:3000/events/reject/${e.target.value}`
-    , { user })
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/accept/${e.target.value}`
+          : `http://localhost:3000/events/reject/${e.target.value}`,
+        { user }
+      )
       .then(res => dispatch({ type: "LOGIN", user: res.data }))
       .catch(err => console.log(err));
   }
@@ -93,15 +92,14 @@ class _Main extends Component {
       <div>
         <Header />
         {user ? (
-          <div >
-            <div className="respBox">
-              <img className="imgFit marginTop" src={user.imgPath} alt="User " />
-            </div>
-            <div className="respBox">
+          <div>
+            <div className="respBox marginTop">
               <div className="info">
                 <div>
-                  <h1>{user.name} Events </h1>
+                  <h1>{user.name} events </h1>
                 </div>
+                <img className="imgFit " src={user.imgPath} alt="User " />
+
                 <div>
                   <Link className="btnbig blue" to="/Create">
                     Create new event
@@ -112,48 +110,58 @@ class _Main extends Component {
 
             <div>
               <NewChaBox>
-               {user.privated.length >0  && <ListEvents>
-                  <ListUser
-                    type="Your Private events"
-                    userdata={user.privated}
-                  />
-                </ListEvents>}
-                {user.challenged.length >0 &&<ListEvents>
-                  <ListUser type="Your Challenges" userdata={user.challenged} />
-                </ListEvents>}
-                {user.inspectors.length >0 &&
-                <ListEvents>
-                  <ListUser
-                    type="Your Controlled events"
-                    userdata={user.inspectors}
-                  />
-                </ListEvents>}
-                {user.invitationCha.length >0 &&
-                <ListEvents>
-                  <ListAccept
-                  color1="green"
-                  color2="red"
-                    type="You have been challenged"
-                    option1="Accept"
-                    option2="reject"
-                    userdata={user.invitationCha}
-                    onClick={e => this.acceptEvent(e)}
-                    onClick2={e => this.rejectEvent(e)}
-                  />
-                </ListEvents>}
-              {user.invitationIns.length >0 &&
-                <ListEvents>
-                  <ListAccept
-                    type="Want yo inspect this?"
-                    userdata={user.invitationIns}
-                    color1="green"
-                    color2="red"
-                    option1="Accept"
-                    option2="reject"
-                    onClick={e => this.acceptEvent(e)}
-                    onClick2={e => this.rejectEvent(e)}
-                  />
-                </ListEvents>}
+                {user.privated.length > 0 && (
+                  <ListEvents>
+                    <ListUser
+                      type="Your Private events"
+                      userdata={user.privated}
+                    />
+                  </ListEvents>
+                )}
+                {user.challenged.length > 0 && (
+                  <ListEvents>
+                    <ListUser
+                      type="Your Challenges"
+                      userdata={user.challenged}
+                    />
+                  </ListEvents>
+                )}
+                {user.inspectors.length > 0 && (
+                  <ListEvents>
+                    <ListUser
+                      type="Your Controlled events"
+                      userdata={user.inspectors}
+                    />
+                  </ListEvents>
+                )}
+                {user.invitationCha.length > 0 && (
+                  <ListEvents>
+                    <ListAccept
+                      color1="green"
+                      color2="red"
+                      type="You have been challenged"
+                      option1="Accept"
+                      option2="reject"
+                      userdata={user.invitationCha}
+                      onClick={e => this.acceptEvent(e)}
+                      onClick2={e => this.rejectEvent(e)}
+                    />
+                  </ListEvents>
+                )}
+                {user.invitationIns.length > 0 && (
+                  <ListEvents>
+                    <ListAccept
+                      type="Want yo inspect this?"
+                      userdata={user.invitationIns}
+                      color1="green"
+                      color2="red"
+                      option1="Accept"
+                      option2="reject"
+                      onClick={e => this.acceptEvent(e)}
+                      onClick2={e => this.rejectEvent(e)}
+                    />
+                  </ListEvents>
+                )}
               </NewChaBox>
             </div>
           </div>
@@ -182,4 +190,3 @@ class _Main extends Component {
 }
 
 export const Main = connect(store => ({ user: store.user }))(_Main);
-

@@ -4,7 +4,6 @@ class ShowRewards extends Component {
   render() {
     return (
       <div>
-        <h3>Rewards</h3>
           {this.props.userdata.map((e, index) => (
             <div key={index}>
               <p>

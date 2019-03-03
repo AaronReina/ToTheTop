@@ -31,6 +31,7 @@ class Input extends Component {
   render() {
     return (
       <Block>
+        
         <label >{this.props.text}</label>
         <Inputs
         value={this.props.value}

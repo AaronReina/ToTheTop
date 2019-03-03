@@ -1,26 +1,32 @@
 import React, { Component } from "react";
 
 class Rewards extends Component {
-  animation = e => {
-    this.props.complete(e);
-document.getElementById(this.props.cont).className="respBox spin"
+  animation = (e, surprise) => {
+    
+   if(surprise=== true) {document.getElementById(this.props.cont).className="respBox spin"
+   setTimeout(()=>this.props.complete(e), 2000);
+  }
+  else{
+    this.props.complete(e)
+  }
+
   };
 
   render() {
     const { e, event, unLock, cont } = this.props;
     return (
       <React.Fragment>
-        <div>
+        <div className="block">
           {e.surprise ? (
             <div>
-              <div>{`Goal:   ${e.goal}`}</div>
+              <h4>{`Goal:   ${e.goal}`}</h4>
               <div >
                 <div className="view view-second">
                   <div id={cont} className={`respBox `}>
                     <img
                       className="imgFit"
                       alt="img"
-                      src="https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/locked.png"
+                      src="https://res.cloudinary.com/aaronreina/image/upload/v1551380547/ToTheTop/locked.png"
                     />
                   </div>
 
@@ -40,21 +46,21 @@ document.getElementById(this.props.cont).className="respBox spin"
             </div>
           )}
           {e.done ? (
-            <button>COMPLETE</button>
+            <button className="btn complete" disabled>COMPLETE!!</button>
           ) : e.locked ? (
             event.type === "private" ? (
-              <button onClick={_ => this.animation(e._id)}>Take It!!!</button>
+              <button className="btn green" onClick={_ => this.animation(e._id, e.surprise)}>Take It!!!</button>
             ) : event.type === "challenged" ? (
-              <button>Blocked!!</button>
+              <button className="btn locked" disabled>Locked!!</button>
             ) : (
               event.type === "inspector" && (
-                <button onClick={_ => unLock(e._id)}>Click to Unlock</button>
+                <button className="btn orange" onClick={_ => unLock(e._id)}>Click to Unlock</button>
               )
             )
           ) : event.type === "challenged" ? (
-            <button onClick={_ => this.animation(e._id)}>Take It!!!</button>
+            <button className="btn green" onClick={_ => this.animation(e._id, e.surprise)}>Take It!!!</button>
           ) : (
-            event.type === "inspector" && <button>Unlocked!!</button>
+            event.type === "inspector" && <button className="btn unlocked" disabled>Unlocked!!</button>
           )}
         </div>
       </React.Fragment>

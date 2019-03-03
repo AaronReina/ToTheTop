@@ -7,7 +7,8 @@ import { logout } from "../lib/redux/actions";
 
 
 const Fixed = styled.div`
- position: fixed; 
+ position: fixed ;
+ z-index: 1;
   top: 0; 
   width: 100%; 
 `;

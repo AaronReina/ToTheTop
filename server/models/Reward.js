@@ -5,7 +5,7 @@ const rewardSchema = new Schema({
   name:String,
   goal:String,
   text: String,
-  imgPath:{type:String, default:"https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg"},
+  imgPath:{type:String, default:"https://res.cloudinary.com/aaronreina/image/upload/v1551637407/ToTheTop/fireworks.jpg"},
   surprise: {type:Boolean, default:false},
   locked: {type:Boolean, default:true},
   done: {type:Boolean, default:false}

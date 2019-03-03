@@ -140,7 +140,7 @@ export class _Events extends Component {
     return (
       <div>
         <Header event={this.state.type} />
-        <div className="inline">
+        <div className="inline marginTop">
           {!this.props.user ? (
             <div>
               <p>please log in</p>

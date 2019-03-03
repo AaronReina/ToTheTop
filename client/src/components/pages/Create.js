@@ -29,7 +29,7 @@ class _Create extends Component {
         goal: "",
         text: "",
         imgPath:
-          "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
+          "https://res.cloudinary.com/aaronreina/image/upload/v1551637407/ToTheTop/fireworks.jpg",
         surprise: false
       },
       rewards: [],
@@ -166,7 +166,7 @@ class _Create extends Component {
         goal: "",
         text: "",
         imgPath:
-          "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/fireworks.jpg",
+          "https://res.cloudinary.com/aaronreina/image/upload/v1551637407/ToTheTop/fireworks.jpg",
         surprise: this.state.reward.surprise
       }
     });
@@ -183,11 +183,11 @@ class _Create extends Component {
     statenow.name = e.target.value;
     this.setState({ event: statenow });
   }
-  handleEventype(e) {
-    let statenow = this.state.event;
-    statenow.type = e.target.value;
-    this.setState({ event: statenow });
-  }
+  // handleEventype(e) {
+  //   let statenow = this.state.event;
+  //   statenow.type = e.target.value;
+  //   this.setState({ event: statenow });
+  // }
   handleEventobjective(e) {
     let statenow = this.state.event;
     statenow.objective = e.target.value;
@@ -218,26 +218,30 @@ class _Create extends Component {
     return (
       <div>
         <Header />
-        <div className="info">
+        <div className="info marginTop">
           {!this.props.user ? (
             <div>
               <p>please log in</p>
             </div>
           ) : (
-            <div>
+            <div >
+              <h1>NEW EVENT</h1>
+            <div className="block backcreate">
+            <h2>1. Participants</h2>
               <InputCheck
               id="private"
-                text="Click to make this event private"
+                text="click if this event is only for you"
                 type="checkbox"
                 onChange={() => this.privateEvent()}
               />
               {this.state.private || (
                 <div>
                   <Input
-                    text="or type an email to looking for friends"
+                    text="or search people by email"
                     onChange={e => this.filterUsers(e)}
                   />
-                  <ListAccept
+                 
+                 <ListAccept
                      color1="purple"
                      color2="orange"
                   option1="Challenged"
@@ -246,30 +250,37 @@ class _Create extends Component {
                     onClick2={e => this.addToInspector(e)}
                     userdata={this.state.userList}
                   />
-                  
+                  {(this.state.temporal.challenged || this.state.temporal.inspectors.length >0) &&
                   <ShowUsers
                    className="btn red"
                     onClick={e => this.clearUsers(e)}
                     userdata={this.state.temporal}
                   />
+                 }
                 </div>
               )}
+              </div>
+              <div className="block backcreate">
+            <h2>2. Event info </h2>
               <Input
                 text="Name of the event"
                 onChange={e => this.handleEventname(e)}
               />
 
-              <label>"Type of the event"</label>
+              {/* <label>"Type of the event"</label>
               <select id="types" onChange={e => this.handleEventype(e)}>
                 <option>Basic</option>
                 <option>Smoke</option>
                 <option>Weigth</option>
                 <option>fit</option>
-              </select>
+              </select> */}
               <Input
                 text="Final Objective"
                 onChange={e => this.handleEventobjective(e)}
               />
+              </div>
+              <div className="block backcreate">
+            <h2>3. Rewards</h2>
               <Input
                 text="Name of the reward"
                 value={this.state.reward.name}
@@ -280,18 +291,20 @@ class _Create extends Component {
                 value={this.state.reward.goal}
                 onChange={e => this.handleRewardgoal(e)}
               />
-              <Input
-                text="some info about the reward"
-                value={this.state.reward.text}
-                onChange={e => this.handleRewardtext(e)}
-              />
+             
               <InputCheck
               id="surprise"
                 text="Is a surprise?"
                 type="checkbox"
                 onChange={() => this.handleRewarsuprise()}
               />
+            { this.state.reward.surprise &&  <Input
+                text="Add a clue about the secret reward"
+                value={this.state.reward.text}
+                onChange={e => this.handleRewardtext(e)}
+              />}
               <Input
+              text="Add a photo of the reward"
                 type="file"
                 onChange={e => this.handleImgChange(e)}
                 name="name"
@@ -301,14 +314,18 @@ class _Create extends Component {
                 onClick={e => this.handleRewardPush(e)}
                 info={"Add this Reward"}
               />
-              
+              </div>
               {this.state.rewards.length>0 &&
               <React.Fragment>
+                  <div className="block backcreate">
+            <h3>Rewards list</h3>
               <ShowRewards
               className="btn red"
               onClick={() => this.clearRewards()}
               userdata={this.state.rewards}
             />
+            </div>
+            
               <Buttonn
               className="btnbig green" 
                 onClick={() => this.createEventHandler()}

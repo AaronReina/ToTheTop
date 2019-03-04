@@ -213,7 +213,7 @@ class _Create extends Component {
     statenow.surprise = !statenow.surprise;
     this.setState({ reward: statenow });
   }
-
+// 686349998
   render() {
     return (
       <div>
@@ -223,7 +223,11 @@ class _Create extends Component {
             <div>
               <p>please log in</p>
             </div>
-          ) : (
+          ) : !this.props.user.active? (
+            <div>
+              <p>please verify your account</p>
+            </div>
+          ):(
             <div >
               <h1>NEW EVENT</h1>
             <div className="block backcreate">

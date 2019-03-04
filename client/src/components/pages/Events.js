@@ -145,7 +145,11 @@ export class _Events extends Component {
             <div>
               <p>please log in</p>
             </div>
-          ) : this.state.type !== "challenged" &&
+          ) : !this.props.user.active? (
+            <div>
+              <p>please verify your account</p>
+            </div>
+          ):this.state.type !== "challenged" &&
             this.state.type !== "private" &&
             this.state.type !== "inspector" ? (
             <p>you have no access to this challenge</p>

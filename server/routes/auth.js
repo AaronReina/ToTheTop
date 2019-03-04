@@ -2,8 +2,8 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const User = require("../models/User");
-const Events = require("../models/Events");
 const uploadCloud = require("../configs/cloudinary.js");
+const sendMail = require("../email/sendmail");
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -40,17 +40,21 @@ console.log(imgPath)
     if (user !== null) {
       return;
     }
-
+    const list = "abcdefghijkmnpqrtuvwxyzABCDEFGHJKMNPQRTUVWXYZ2346789";
+    let valCode = "";
+    for (i=0; i<20; i++) valCode +=list.charAt(Math.floor(Math.random()*list.length)); 
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
-
+    sendMail(email,valCode)
     const newUser = new User({
       email,
       password: hashPass,
       name,
+      valCode,
       imgPath
     });
 
+    
     newUser
       .save()
       .then(user => loginPromise(req, user).then(user => res.json({ user })))
@@ -80,5 +84,11 @@ router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
   console.log("manda");
   res.json(req.file);
 });
+router.get("/confirmation/:id",(req,res,next)=>{
+  const id= req.params.id;
+  User.findOneAndUpdate({valCode:id},{active:true}).then(()=> {
+    res.redirect("http://localhost:8000/")})
+  
+})
 
 module.exports = router;

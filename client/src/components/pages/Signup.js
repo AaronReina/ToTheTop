@@ -75,7 +75,7 @@ export class _Signup extends Component {
             name="name"
           />
           <Input text="Email" onChange={e => this.handleEmail(e)} />
-          <Input text="Password" onChange={e => this.handlePass(e)} />
+          <Input type="Password" text="Password" onChange={e => this.handlePass(e)} />
           <Input text="Name" onChange={e => this.handleName(e)} />
           <div className="info">
           <Buttonn className="btnbig mainColor" onClick={() => this.handleSubmit()} info={"Lets Go!"} />

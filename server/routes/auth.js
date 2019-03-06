@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
@@ -88,8 +89,7 @@ router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
 router.get("/confirmation/:id",(req,res,next)=>{
   const id= req.params.id;
   User.findOneAndUpdate({valCode:id},{active:true}).then(()=> {
-    res.redirect("http://localhost:8000/")})
-  
+    res.redirect(process.env.ROUTECLIENT)
 })
-
+})
 module.exports = router;

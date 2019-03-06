@@ -31,7 +31,7 @@ handleLogin(){
           <Header/>
            <div className="marginTop">
         <Input text="Email" onChange={e => this.setState({email:e.target.value})} />
-        <Input text="Password" onChange={e => this.setState({password:e.target.value})}/>
+        <Input type="Password" text="Password" onChange={e => this.setState({password:e.target.value})}/>
         <div className="info">
         <Buttonn className="btnbig mainColor" onClick={() => this.handleLogin()}  info="Login"/>
       </div>

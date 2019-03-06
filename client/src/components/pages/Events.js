@@ -64,13 +64,16 @@ export class _Events extends Component {
       .catch(err => console.log(err));
   }
 
-  unLock = e => {
+  unLock = e  => {
+    const { challenged } = this.state;
     return axios
-
       .post(
         process.env.NODE_ENV === "production"
           ? `/events/unLock/${e}`
-          : `http://localhost:3000/events/unLock/${e}`
+          : `http://localhost:3000/events/unLock/${e}`,
+          {
+            challenged
+          }
       )
       .then(res => {
         let newState = [...this.state.rewards];
@@ -127,6 +130,27 @@ export class _Events extends Component {
       this.setState({ state: statenow });
     });
   };
+  
+  askInspect=e=> {
+    const { inspectors,challenged } = this.state;
+    return axios
+      .post(
+        process.env.NODE_ENV === "production"
+          ? `/events/ask`
+          : `http://localhost:3000/events/ask`,
+        {
+          inspectors,
+          challenged
+        }
+      )
+      .then(res => {
+        
+        document.getElementById("ask").className="btnbig disable"
+        setTimeout(()=>document.getElementById("ask").className="btnbig orange", 600000);
+        
+      })
+      .catch(err => console.log(err));
+  }
 
   componentDidMount() {
     this.props.user && this.eventHandler() && this.eventHandler2();
@@ -161,6 +185,7 @@ export class _Events extends Component {
                 complete={this.complete}
                 handleImgChange={this.handleImgChange}
                 actualValue={this.actualValue}
+                askInspect={this.askInspect}
               />
             </div>
           )}

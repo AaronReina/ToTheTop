@@ -3,7 +3,7 @@ const passport = require("passport");
 const router = express.Router();
 const User = require("../models/User");
 const uploadCloud = require("../configs/cloudinary.js");
-const sendMail = require("../email/sendmail");
+const {sendMailConfirmation} = require("../email/sendmail");
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -45,7 +45,8 @@ console.log(imgPath)
     for (i=0; i<20; i++) valCode +=list.charAt(Math.floor(Math.random()*list.length)); 
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
-    sendMail(email,valCode)
+    sendMailConfirmation(email,valCode)
+    
     const newUser = new User({
       email,
       password: hashPass,

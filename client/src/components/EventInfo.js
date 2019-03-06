@@ -27,7 +27,8 @@ class _EventInfo extends Component {
       unLock,
       event,
       handleImgChange,
-      actualValue
+      actualValue,
+      askInspect
     } = this.props;
     return (
       <div>
@@ -76,6 +77,10 @@ class _EventInfo extends Component {
               Save progress
             </button>
             </div>}
+            {event.type == "challenged" &&
+            <button id="ask" className="btnbig orange" onClick={_ => askInspect()}>
+              Ask for inspection!!
+            </button>}
         </div>
         <div className="block">
         <h2>List of Rewards </h2>

@@ -259,6 +259,12 @@ body{
   background-color: #242582;
   box-shadow: 0px 5px 0px 0px #12048da4;
  }
+ .disable {
+  display:none;
+  background-color: grey;
+  box-shadow: 0px 5px 0px 0px rgba(255, 166, 0, 0.596)
+  ;
+ }
 
  .complete {
   background-color: rgb(7, 7, 7);

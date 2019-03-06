@@ -3,6 +3,7 @@ const router = express.Router();
 const Events = require("../models/Events");
 const Rewards = require("../models/Reward");
 const User = require("../models/User");
+const {sendMailChallenged,sendMailInspectors,sendMailUnlocked,sendMailAsk} = require("../email/sendmail");
 
 router.post("/type/:id", (req, res, next) => {
   const { user } = req.body;
@@ -25,12 +26,25 @@ router.post("/type/:id", (req, res, next) => {
 
 router.post("/unLock/:id", (req, res, next) => {
   const { id } = req.params;
+  const { challenged } = req.body;
+  User.findById(challenged).then(e=>sendMailUnlocked(e.email,e.name))
   Rewards.findByIdAndUpdate(id, {
         locked:false
       },{new:true})
     .then(e => res.json(e))
     .catch(e => console.log(e));
 });
+
+router.post("/ask", (req, res, next) => {
+  const { inspectors, challenged } = req.body;
+  let chal;
+  console.log(challenged)
+  User.findById(challenged).then(e=> chal=e.name).then(
+  inspectors.forEach(e=>User.findById(e).then(e=>sendMailAsk(e.email,e.name,chal))))
+    .then(e => res.json(e))
+    .catch(e => console.log(e));
+});
+
 
 router.post("/actualValue/:id", (req, res, next) => {
   const { id } = req.params;
@@ -131,14 +145,15 @@ router.post("/create", (req, res, next) => {
         actualValue: "",
         rewards: r.map(e => e._id)
       });
-      console.log(event.privated);
       if (event.privated != "") {
         console.log("esprivado");
         newEvent.privated = event.privated;
       } else {
-        console.log("no es esprivado");
         newEvent.challenged = event.challenged;
         newEvent.inspectors = event.inspectors;
+        console.log(event.inspectors)
+        User.findById(event.challenged).then(e=>sendMailChallenged(e.email,e.name))
+        event.inspectors.forEach(e=>User.findById(e).then(e=>sendMailInspectors(e.email,e.name)))
       }
 
       newEvent.save().then(e => {
@@ -146,15 +161,15 @@ router.post("/create", (req, res, next) => {
           $push: {
             privated: { name: e.name, id: e._id }
           }
-        }).then(e => console.log(e));
+        }).then(e => console.log());
         User.findByIdAndUpdate(e.challenged, {
           $push: { invitationCha: { name: e.name, id: e._id } }
         }).then(_ => {
-          console.log(e);
+          console.log();
           e.inspectors.forEach(element => {
             User.findByIdAndUpdate(element, {
               $push: { invitationIns: { name: e.name, id: e._id } }
-            }).then(e => console.log(e));
+            }).then(e => console.log());
           });
         });
       });

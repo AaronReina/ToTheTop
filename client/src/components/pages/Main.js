@@ -44,7 +44,7 @@ const Text = styled.div`
 `;
 
 const NewChaBox = styled.div`
-  margin: 10% 5%;
+  margin: 15% 5%;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -92,12 +92,12 @@ class _Main extends Component {
       <div>
         <Header />
         {user ? (
-          <div>
-            <div className="respBox marginTop">
+          <div className= "marginTop">
+            <div className="respBox ">
               <div className="info">
-                <div>
-                  <h1>{user.name} events </h1>
-                </div>
+               
+                  <h1 className="paddingTop">{user.name} events </h1>
+             
                 <img className="imgFit " src={user.imgPath} alt="User " />
 
                 <div>

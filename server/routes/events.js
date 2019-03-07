@@ -36,11 +36,13 @@ router.post("/unLock/:id", (req, res, next) => {
 });
 
 router.post("/ask", (req, res, next) => {
-  const { inspectors, challenged } = req.body;
+  const { id,inspectors, challenged,out } = req.body;
   let chal;
-  console.log(challenged)
+  Events.findByIdAndUpdate(id, {
+    timeOut:out 
+      }).then(_=>
   User.findById(challenged).then(e=> chal=e.name).then(
-  inspectors.forEach(e=>User.findById(e).then(e=>sendMailAsk(e.email,e.name,chal))))
+  inspectors.forEach(e=>User.findById(e).then(e=>sendMailAsk(e.email,e.name,chal)))))
     .then(e => res.json(e))
     .catch(e => console.log(e));
 });

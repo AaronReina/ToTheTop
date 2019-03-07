@@ -10,7 +10,8 @@ const eventsSchema = new Schema(
     imgPath:{type:String, default:"https://res.cloudinary.com/aaronreina/image/upload/v1550519673/ToTheTop/noimage.png"},
     objective: String,
     actualValue: String,
-    rewards:[{type:Schema.Types.ObjectId, ref:"Rewards"}] 
+    rewards:[{type:Schema.Types.ObjectId, ref:"Rewards"}] ,
+    timeOut:{type:Number, default:0}
   },
   {
     timestamps: {

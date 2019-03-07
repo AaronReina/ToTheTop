@@ -14,7 +14,8 @@ export class _Signup extends Component {
       password: "",
       imgPath:
         "https://res.cloudinary.com/aaronreina/image/upload/v1549059861/ToTheTop/userDefault.png",
-      name: ""
+      name: "",
+      error:""
     };
   }
   handleImgChange = e => {
@@ -43,23 +44,29 @@ export class _Signup extends Component {
     console.log("ha entrado")
     const { email, password, name, imgPath } = this.state;
     const { dispatch } = this.props;
+
+    if(email=== ""|| password=== ""|| name===""){
+      this.setState({ error: "Please complete all the fields" });
+    }
+
+    else(
     AuthAPI.signup(email, password, name, imgPath)
       .then(user => {
         console.log("ha salido")
         dispatch(login(user));
         this.props.history.push("/");
-      })
+      }))
       .catch(e => console.log("catch de handlesubmit" + e));
   }
 
   handleEmail(e) {
-    this.setState({ email: e.target.value });
+    this.setState({ email: e.target.value ,error:"" });
   }
   handlePass(e) {
-    this.setState({ password: e.target.value });
+    this.setState({ password: e.target.value ,error:"" });
   }
   handleName(e) {
-    this.setState({ name: e.target.value });
+    this.setState({ name: e.target.value ,error:"" });
   }
   render() {
     return (
@@ -67,7 +74,9 @@ export class _Signup extends Component {
         <Header />
         <div className="marginTop">
           <div className="respBox">
+          <div className="imgBox">
             <img className="imgFit" alt="img" src={this.state.imgPath} />
+            </div>
           </div>
           <Input
             type="file"
@@ -75,8 +84,9 @@ export class _Signup extends Component {
             name="name"
           />
           <Input text="Email" onChange={e => this.handleEmail(e)} />
-          <Input type="Password" text="Password" onChange={e => this.handlePass(e)} />
           <Input text="Name" onChange={e => this.handleName(e)} />
+          <Input type="Password" text="Password" onChange={e => this.handlePass(e)} />
+          <div className="main"> <p className="error">{this.state.error}</p></div>
           <div className="info">
           <Buttonn className="btnbig mainColor" onClick={() => this.handleSubmit()} info={"Lets Go!"} />
         </div>

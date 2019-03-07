@@ -62,9 +62,11 @@ class _EventInfo extends Component {
           <div className= {`block back${event.type}`}>
             
             <h2>Actual Progress</h2>
-            <div className="respBox">
+            <div className="resBox">
             <h3>{event.actualValue}</h3>
+          
               <img className="imgFit" alt="img" src={event.photo} />
+              
             </div>
             {event.type !== "inspector" &&<div>
             <Input type="file" onChange={e => handleImgChange(e)} name="name" />
@@ -77,11 +79,15 @@ class _EventInfo extends Component {
               Save progress
             </button>
             </div>}
-            {event.type == "challenged" &&
+            {event.type == "challenged" && this.props.showAsk &&
+            <div>
             <button id="ask" className="btnbig orange" onClick={_ => askInspect()}>
               Ask for inspection!!
-            </button>}
+            </button>
+            <p>Click will disable this button 1 hour!</p>
+            </div>}
         </div>
+        
         <div className="block">
         <h2>List of Rewards </h2>
         {this.props.event.rewards.map((e, index) => (

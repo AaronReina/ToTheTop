@@ -17,7 +17,9 @@ export class _Events extends Component {
       challenged: "",
       inspectors: [],
       rewards: [],
-      lock: ""
+      lock: "",
+      timeOut:"",
+      showAsk:false
     };
   }
   eventHandler() {
@@ -48,6 +50,11 @@ export class _Events extends Component {
             }`
       )
       .then(res => {
+        let time= new Date()
+        let timenow =time.getTime()
+        console.log(timenow)
+        console.log(this.state.timeOut)
+        let showAsk = timenow > res.data.timeOut 
         this.setState({
           id: this.props.match.params.id,
           name: res.data.name,
@@ -58,9 +65,13 @@ export class _Events extends Component {
           actualValue: res.data.actualValue,
           lock: res.data.locked,
           progress: res.data.progress,
-          photo: res.data.imgPath
+          photo: res.data.imgPath,
+          timeOut: res.data.timeOut,
+          showAsk
         });
-      })
+      }).then(res => {
+        console.log(res)
+        })
       .catch(err => console.log(err));
   }
 
@@ -132,22 +143,22 @@ export class _Events extends Component {
   };
   
   askInspect=e=> {
-    const { inspectors,challenged } = this.state;
+    let time= new Date()
+    let out =time.getTime()+3600000
+    const { inspectors,challenged,id } = this.state;
     return axios
       .post(
         process.env.NODE_ENV === "production"
           ? `/events/ask`
           : `http://localhost:3000/events/ask`,
-        {
+        {id,
           inspectors,
-          challenged
+          challenged,
+          out
         }
       )
       .then(res => {
-        
-        document.getElementById("ask").className="btnbig disable"
-        setTimeout(()=>document.getElementById("ask").className="btnbig orange", 600000);
-        
+this.setState({showAsk:false})
       })
       .catch(err => console.log(err));
   }
@@ -161,6 +172,8 @@ export class _Events extends Component {
       this.eventHandler2();
   }
   render() {
+
+ 
     return (
       <div>
         <Header event={this.state.type} />
@@ -186,6 +199,7 @@ export class _Events extends Component {
                 handleImgChange={this.handleImgChange}
                 actualValue={this.actualValue}
                 askInspect={this.askInspect}
+                showAsk= {this.state.showAsk}
               />
             </div>
           )}

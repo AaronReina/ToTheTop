@@ -39,7 +39,9 @@ class _Create extends Component {
       temporal: {
         challenged: "",
         inspectors: []
-      }
+      },
+      errorEvent:"",
+      errorReward:""
     };
   }
   handleImgChange = e => {
@@ -56,9 +58,19 @@ class _Create extends Component {
 
   createEventHandler() {
     const state = this.state;
+   
+    console.log(state.private)
+    console.log(state.temporal.challenged)
+    if(state.event.name=== ""|| state.event.objective=== ""){
+      this.setState({ errorEvent: "Please complete all the event fields " })
+      return
+    }
+   else if(state.private=== false && (state.temporal.challenged=== "" || state.temporal.inspectors.length === 0 ) ){
+    this.setState({ errorEvent: "Please choose the participants " })
+    return
+  }
 
     return axios
-
       .post(
         process.env.NODE_ENV === "production"
           ? "/events/create"
@@ -172,6 +184,10 @@ class _Create extends Component {
     });
   }
   handleRewardPush(e) {
+    if(this.state.reward.name=== ""|| this.state.reward.goal=== ""){
+      this.setState({ errorReward: "Please complete all the reward fields " })
+      return
+    }
     let actualReward = this.state.rewards;
     const reward = this.state.reward;
     actualReward.push({ ...reward });
@@ -182,6 +198,7 @@ class _Create extends Component {
     let statenow = this.state.event;
     statenow.name = e.target.value;
     this.setState({ event: statenow });
+    this.setState({ errorEvent: "" });
   }
   // handleEventype(e) {
   //   let statenow = this.state.event;
@@ -192,16 +209,19 @@ class _Create extends Component {
     let statenow = this.state.event;
     statenow.objective = e.target.value;
     this.setState({ event: statenow });
+    this.setState({ errorEvent: "" });
   }
   handleRewardname(e) {
     let statenow = this.state.reward;
     statenow.name = e.target.value;
     this.setState({ reward: statenow });
+    this.setState({ errorReward: "" });
   }
   handleRewardgoal(e) {
     let statenow = this.state.reward;
     statenow.goal = e.target.value;
     this.setState({ reward: statenow });
+    this.setState({ errorReward: "" });
   }
   handleRewardtext(e) {
     let statenow = this.state.reward;
@@ -213,7 +233,7 @@ class _Create extends Component {
     statenow.surprise = !statenow.surprise;
     this.setState({ reward: statenow });
   }
-// 686349998
+
   render() {
     return (
       <div>
@@ -313,6 +333,7 @@ class _Create extends Component {
                 onChange={e => this.handleImgChange(e)}
                 name="name"
               />
+               <div className="main"> <p className="error">{this.state.errorReward}</p></div>
               <Buttonn
               className="btnbig blue" 
                 onClick={e => this.handleRewardPush(e)}
@@ -329,7 +350,7 @@ class _Create extends Component {
               userdata={this.state.rewards}
             />
             </div>
-            
+            <div className="main"> <p className="error">{this.state.errorEvent}</p></div>
               <Buttonn
               className="btnbig green" 
                 onClick={() => this.createEventHandler()}

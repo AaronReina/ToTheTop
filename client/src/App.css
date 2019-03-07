@@ -303,24 +303,27 @@ body{
  }
 
  .marginTop{
-   margin-top: 16vh;
+   margin-top: 20vh;
  }
 
- 
- @media only screen and (min-width: 601px) {
+ .imgBox{
+
+  width: 45%;
+}
+
   .respBox{
-    margin:  10%;
-   width: 45%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
  }
- }
- @media only screen and (max-width: 600px) {
-  .respBox{
-    margin:  10%;
-   width: 80%;
- }
- }
+.paddingTop{
+  padding-top: 5vh
+}
 
-
+.error{
+color:red;
+font-size:14px
+}
 
  .spin img{
   animation: spin 2s ease-in-out forwards  ;
@@ -334,7 +337,6 @@ body{
   height: 100%;
 }
 50% {
-  padding-left: 100%;
   width: 0%;
   height: 0%;
 }

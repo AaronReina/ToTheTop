@@ -58,9 +58,6 @@ class _Create extends Component {
 
   createEventHandler() {
     const state = this.state;
-   
-    console.log(state.private)
-    console.log(state.temporal.challenged)
     if(state.event.name=== ""|| state.event.objective=== ""){
       this.setState({ errorEvent: "Please complete all the event fields " })
       return
@@ -102,8 +99,7 @@ class _Create extends Component {
         .then(element => {
           this.setState({
             userList: element.data
-          });
-          console.log(this.state.userList);
+          })
         })
         .catch(err => console.log(err));
   };
@@ -117,12 +113,10 @@ class _Create extends Component {
       stateCopy.event.inspectors = [];
       stateCopy.private = privateSwitch;
       this.setState({ state: stateCopy });
-      console.log(this.state);
     } else {
       stateCopy.event.privated = "";
       stateCopy.private = privateSwitch;
       this.setState({ state: stateCopy });
-      console.log(this.state);
     }
   }
 
@@ -134,16 +128,13 @@ class _Create extends Component {
     ) {
       return "";
     }
-    console.log(e.target.value)
     statenow.event.inspectors.push(e.target.value);
     statenow.temporal.inspectors.push(e.target.name);
     this.setState({ state: statenow });
-    console.log(this.state);
   }
 
   addToChallenged(e) {
     let statenow = this.state;
-    console.log(e.target.value)
     if (
       statenow.event.inspectors.includes(e.target.value) ||
       statenow.event.challenged === e.target.value
@@ -154,7 +145,6 @@ class _Create extends Component {
     statenow.event.challenged = e.target.value;
     statenow.temporal.challenged = e.target.name;
     this.setState({ state: statenow });
-    console.log(this.state);
   }
   clearUsers() {
     let stateCopy = this.state;
@@ -163,7 +153,6 @@ class _Create extends Component {
     stateCopy.temporal.challenged = "";
     stateCopy.temporal.inspectors = [];
     this.setState({ state: stateCopy });
-    console.log(this.state);
   }
   clearRewards() {
     this.setState({

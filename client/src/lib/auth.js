@@ -44,7 +44,7 @@ export class AuthAPI {
 
     static logout(email, password){
         return instance.get('/auth/logout')
-        .then((res) => console.log("Logout"))
+        .then((res) => console.log(res))
         .catch(AuthAPI.errorHandler)
     }
 

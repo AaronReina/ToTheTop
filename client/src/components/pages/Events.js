@@ -52,8 +52,6 @@ export class _Events extends Component {
       .then(res => {
         let time= new Date()
         let timenow =time.getTime()
-        console.log(timenow)
-        console.log(this.state.timeOut)
         let showAsk = timenow > res.data.timeOut 
         this.setState({
           id: this.props.match.params.id,

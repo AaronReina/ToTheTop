@@ -90,21 +90,16 @@ router.post("/searchUser/:id", (req, res, next) => {
 router.post("/accept/:id", (req, res, next) => {
   const { id } = req.params;
   let { user } = req.body;
-  console.log(id, user);
   let challengedId = [];
   user.invitationCha.forEach(e => challengedId.push(e.id));
   let inspectorsId = user.invitationIns.map(e => e.id);
-  console.log(inspectorsId);
 
   if (challengedId.indexOf(id) != -1) {
     let cutCha = user.invitationCha.splice(challengedId.indexOf(id), 1);
     user.challenged.push(...cutCha);
-    console.log("challenged");
   } else if (inspectorsId.indexOf(id) != -1) {
     let cutIns = user.invitationIns.splice(inspectorsId.indexOf(id), 1);
     user.inspectors.push(...cutIns);
-
-    console.log("inspector");
   }
   User.findByIdAndUpdate(user._id, {
     invitationCha: user.invitationCha,
@@ -117,18 +112,13 @@ router.post("/accept/:id", (req, res, next) => {
 router.post("/reject/:id", (req, res, next) => {
   const { id } = req.params;
   let { user } = req.body;
-  console.log(id, user);
   let challengedId = [];
   user.invitationCha.forEach(e => challengedId.push(e.id));
   let inspectorsId = user.invitationIns.map(e => e.id);
-  console.log(inspectorsId);
-
   if (challengedId.indexOf(id) != -1) {
     user.invitationCha.splice(challengedId.indexOf(id), 1);
-    console.log("challenged");
   } else if (inspectorsId.indexOf(id) != -1) {
     user.invitationIns.splice(inspectorsId.indexOf(id), 1);
-    console.log("inspector");
   }
   User.findByIdAndUpdate(user._id, {
     invitationCha: user.invitationCha,
@@ -148,12 +138,10 @@ router.post("/create", (req, res, next) => {
         rewards: r.map(e => e._id)
       });
       if (event.privated != "") {
-        console.log("esprivado");
         newEvent.privated = event.privated;
       } else {
         newEvent.challenged = event.challenged;
         newEvent.inspectors = event.inspectors;
-        console.log(event.inspectors)
         User.findById(event.challenged).then(e=>sendMailChallenged(e.email,e.name))
         event.inspectors.forEach(e=>User.findById(e).then(e=>sendMailInspectors(e.email,e.name)))
       }
@@ -167,7 +155,6 @@ router.post("/create", (req, res, next) => {
         User.findByIdAndUpdate(e.challenged, {
           $push: { invitationCha: { name: e.name, id: e._id } }
         }).then(_ => {
-          console.log();
           e.inspectors.forEach(element => {
             User.findByIdAndUpdate(element, {
               $push: { invitationIns: { name: e.name, id: e._id } }

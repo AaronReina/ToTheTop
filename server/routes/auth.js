@@ -27,12 +27,10 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  console.log("entra signup")
   const email = req.body.email;
   const password = req.body.password;
   const name = req.body.name;
   const imgPath = req.body.imgPath;
-console.log(imgPath)
   if (email === "" || password === "" || name === "") {
     return;
   }
@@ -77,13 +75,11 @@ router.get("/loggedin", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  console.log("entra en la ruta logout");
   req.logout();
   res.json({ succes: "Done" });
 });
 
 router.post("/image", uploadCloud.single("photo"), (req, res, next) => {
-  console.log("manda");
   res.json(req.file);
 });
 router.get("/confirmation/:id",(req,res,next)=>{

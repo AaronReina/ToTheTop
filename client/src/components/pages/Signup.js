@@ -35,13 +35,11 @@ export class _Signup extends Component {
     AuthAPI.upload(file).then(({ data }) => {
       let statenow = this.state;
       statenow.imgPath = data.url;
-      console.log(data.url);
       this.setState({ state: statenow });
     });
   };
 
   handleSubmit() {
-    console.log("ha entrado")
     const { email, password, name, imgPath } = this.state;
     const { dispatch } = this.props;
 
@@ -52,7 +50,6 @@ export class _Signup extends Component {
     else(
     AuthAPI.signup(email, password, name, imgPath)
       .then(user => {
-        console.log("ha salido")
         dispatch(login(user));
         this.props.history.push("/");
       }))

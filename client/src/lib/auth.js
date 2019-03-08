@@ -42,7 +42,7 @@ export class AuthAPI {
         .catch(AuthAPI.errorHandler);
     }
 
-    static logout(email, password){
+    static logout(){
         return instance.get('/auth/logout')
         .then((res) => console.log(res))
         .catch(AuthAPI.errorHandler)

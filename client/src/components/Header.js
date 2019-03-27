@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 import { AuthAPI } from "../lib/auth";
 import { logout } from "../lib/redux/actions";
 
-
 const Fixed = styled.div`
  position: fixed ;
  z-index: 1;
